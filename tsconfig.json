@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [ "ESNext" ],
     "jsx": "react-native",
     "strict": true,
@@ -11,6 +11,8 @@
     "rootDir": "src",
     "outDir": "dist",
     "declaration": true,
-    "declarationDir": "types"
+    "declarationDir": "types",
+    "forceConsistentCasingInFileNames": true,
   },
+  "exclude": [ "**/__TESTS__/**" ]
 }

@@ -6,4 +6,7 @@ namespace Grid {
   export import Row = GridRow
 }
 
-export = Grid
+export import Col = Grid.Col
+export import Row = Grid.Row
+
+export default Grid
