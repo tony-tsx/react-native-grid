@@ -16,8 +16,8 @@ const Col: StatelessComponent<Col.Props> = props => {
 
 namespace Col {
   export interface Props extends ViewProps {
-    onPress: TouchableOpacityProps['onPress']
-    size: number
+    onPress?: TouchableOpacityProps['onPress']
+    size?: number
   }
 }
 

@@ -16,8 +16,8 @@ const Row: StatelessComponent<Row.Props> = props => {
 
 namespace Row {
   export interface Props extends ViewProps {
-    onPress: TouchableOpacityProps['onPress']
-    size: number
+    onPress?: TouchableOpacityProps['onPress']
+    size?: number
   }
 }
 
