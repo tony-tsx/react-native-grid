@@ -1,6 +1,6 @@
-import { StatelessComponent } from 'react';
+import React from 'react';
 import { ViewProps, TouchableOpacityProps } from 'react-native';
-declare const Row: StatelessComponent<Row.Props>;
+declare const Row: React.StatelessComponent<Row.Props>;
 declare namespace Row {
     interface Props extends ViewProps {
         onPress?: TouchableOpacityProps['onPress'];

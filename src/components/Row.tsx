@@ -1,7 +1,7 @@
-import React, { StatelessComponent } from 'react'
+import React from 'react'
 import { View, ViewProps, TouchableOpacityProps, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native'
 
-const Row: StatelessComponent<Row.Props> = props => {
+const Row: React.StatelessComponent<Row.Props> = props => {
   const { onPress, style, children, ...rest } = props
   const flatten = StyleSheet.flatten( style )
   const rootStyle: ViewStyle = {
