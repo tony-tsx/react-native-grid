@@ -2,7 +2,7 @@
   "name": "react-native-grid",
   "version": "0.6.0",
   "description": "React Native Grid",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/tony-tsx/react-native-grid.git",
   "author": "tony-tsx <tony.js@zoho.eu>",
   "license": "MIT",
