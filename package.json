@@ -1,0 +1,20 @@
+{
+  "name": "react-native-grid",
+  "version": "0.6.0",
+  "description": "React Native Grid",
+  "main": "index.js",
+  "repository": "https://github.com/tony-tsx/react-native-grid.git",
+  "author": "tony-tsx <tony.js@zoho.eu>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^16.9.17",
+    "@types/react-native": "^0.61.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-native": "^0.61.5"
+  }
+}
