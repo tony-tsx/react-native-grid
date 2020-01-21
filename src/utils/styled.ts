@@ -4,9 +4,14 @@ export interface StyledOptions {
   center?: boolean
   align?: boolean | 'start' | 'end' | 'center' | 'stretch' | 'baseline'
   justify?: boolean | 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
+  absolute?: boolean
+  relative?: boolean
 }
 
-const styled = ( { center, align, justify }: StyledOptions, initial?: ViewStyle ) => {
+const styled = (
+  { center, align, justify, absolute, relative }: StyledOptions,
+  initial?: ViewStyle
+) => {
   const style: ViewStyle = Object.assign( {}, initial )
 
   if ( align )
@@ -42,7 +47,15 @@ const styled = ( { center, align, justify }: StyledOptions, initial?: ViewStyle 
     if ( !style.justifyContent ) style.justifyContent = 'center'
   }
 
+  if ( relative ) style.position = 'relative'
+  else if ( absolute ) style.position = 'absolute'
+
   return style
+}
+
+styled.removeProps = <P extends StyledOptions>( props: P ): Omit<P, keyof StyledOptions> => {
+  const { align, center, justify, absolute, relative, ...rest } = props
+  return rest
 }
 
 export default styled

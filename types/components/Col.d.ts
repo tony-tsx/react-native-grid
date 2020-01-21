@@ -1,11 +1,11 @@
 import React from 'react';
-import { ViewProps, TouchableOpacityProps } from 'react-native';
+import { ViewProps } from 'react-native';
 import { StyledOptions } from '../utils/styled';
+import Touch from './Touch';
 declare const Col: React.StatelessComponent<Col.Props>;
 declare namespace Col {
-    interface Props extends ViewProps, StyledOptions {
-        onPress?: TouchableOpacityProps['onPress'];
+    type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
         size?: number;
-    }
+    };
 }
 export default Col;

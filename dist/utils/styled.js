@@ -1,4 +1,4 @@
-const styled = ({ center, align, justify }, initial) => {
+const styled = ({ center, align, justify, absolute, relative }, initial) => {
     const style = Object.assign({}, initial);
     if (align)
         switch (align) {
@@ -32,6 +32,14 @@ const styled = ({ center, align, justify }, initial) => {
         if (!style.justifyContent)
             style.justifyContent = 'center';
     }
+    if (relative)
+        style.position = 'relative';
+    else if (absolute)
+        style.position = 'absolute';
     return style;
+};
+styled.removeProps = (props) => {
+    const { align, center, justify, absolute, relative, ...rest } = props;
+    return rest;
 };
 export default styled;

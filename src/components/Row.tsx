@@ -1,24 +1,28 @@
 import React from 'react'
 import { View, ViewProps, TouchableOpacityProps, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native'
 import styled, { StyledOptions } from '../utils/styled'
+import Touch from './Touch'
 
 const Row: React.StatelessComponent<Row.Props> = props => {
-  const { onPress, style, children, align, center, justify, ...rest } = props
-  const flatten = StyleSheet.flatten( style )
+  const { onPress, children, style, ...rest } = props
+  const { highlight, opacity, non, ...more } = rest
 
+  const flatten = StyleSheet.flatten( style )
   const rootStyle: ViewStyle = {
+    ...styled( rest, flatten ),
     flexDirection: 'row',
     flex: props.size ?? ( flatten && flatten.height ) ? 0 : 1,
-    ...styled( { align, center, justify }, flatten )
   }
+  const rootProps = styled.removeProps( more )
 
-  const col = <View style={ [ flatten, rootStyle ] } { ...rest }>{children}</View>
-  if ( onPress ) return <TouchableOpacity style={ [ flatten, rootStyle ] } onPress={ onPress }>{col}</TouchableOpacity>
-  return col
+  // @ts-ignore
+  return <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } }>
+    <View { ...rootProps } style={ rootStyle }>{children}</View>
+  </Touch>
 }
 
 namespace Row {
-  export interface Props extends ViewProps, StyledOptions {
+  export type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
     onPress?: TouchableOpacityProps['onPress']
     size?: number
   }
