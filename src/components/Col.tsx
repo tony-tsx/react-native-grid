@@ -4,7 +4,7 @@ import styled, { StyledOptions } from '../utils/styled'
 import Touch from './Touch'
 
 const Col: React.StatelessComponent<Col.Props> = props => {
-  const { onPress, children, style, ...rest } = props
+  const { onPress, children, style, touchAfter, ...rest } = props
   const { highlight, opacity, non, ...more } = rest
 
   const flatten = StyleSheet.flatten( style )
@@ -15,8 +15,11 @@ const Col: React.StatelessComponent<Col.Props> = props => {
   }
   const rootProps = styled.removeProps( more )
 
-  // @ts-ignore
-  return <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } }>
+  if ( touchAfter ) return <View { ...rootProps } style={ rootStyle }>
+    <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } as any }>{children}</Touch>
+  </View>
+
+  return <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } as any }>
     <View { ...rootProps } style={ rootStyle }>{children}</View>
   </Touch>
 }
@@ -24,6 +27,7 @@ const Col: React.StatelessComponent<Col.Props> = props => {
 namespace Col {
   export type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
     size?: number
+    touchAfter?: boolean
   }
 }
 
