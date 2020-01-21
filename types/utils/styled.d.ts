@@ -5,9 +5,10 @@ export interface StyledOptions {
     justify?: boolean | 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly';
     absolute?: boolean;
     relative?: boolean;
+    radius?: number;
 }
 declare const styled: {
-    ({ center, align, justify, absolute, relative }: StyledOptions, initial?: ViewStyle | undefined): ViewStyle;
-    removeProps<P extends StyledOptions>(props: P): Pick<P, Exclude<keyof P, "center" | "absolute" | "relative" | "justify" | "align">>;
+    ({ center, align, justify, absolute, relative, radius }: StyledOptions, initial?: ViewStyle | undefined): ViewStyle;
+    removeProps<P extends StyledOptions>(props: P): Pick<P, Exclude<keyof P, "center" | "absolute" | "relative" | "justify" | "align" | "radius">>;
 };
 export default styled;

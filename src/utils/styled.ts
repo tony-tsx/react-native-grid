@@ -6,10 +6,11 @@ export interface StyledOptions {
   justify?: boolean | 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
   absolute?: boolean
   relative?: boolean
+  radius?: number
 }
 
 const styled = (
-  { center, align, justify, absolute, relative }: StyledOptions,
+  { center, align, justify, absolute, relative, radius }: StyledOptions,
   initial?: ViewStyle
 ) => {
   const style: ViewStyle = Object.assign( {}, initial )
@@ -50,11 +51,13 @@ const styled = (
   if ( relative ) style.position = 'relative'
   else if ( absolute ) style.position = 'absolute'
 
+  style.borderRadius = radius
+
   return style
 }
 
 styled.removeProps = <P extends StyledOptions>( props: P ): Omit<P, keyof StyledOptions> => {
-  const { align, center, justify, absolute, relative, ...rest } = props
+  const { align, center, justify, absolute, relative, radius, ...rest } = props
   return rest
 }
 
