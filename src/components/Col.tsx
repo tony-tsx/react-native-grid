@@ -3,25 +3,38 @@ import { View, ViewProps, StyleSheet, ViewStyle } from 'react-native'
 import styled, { StyledOptions } from '../utils/styled'
 import Touch from './Touch'
 
-const Col: React.StatelessComponent<Col.Props> = props => {
-  const { onPress, children, style, touchAfter, ...rest } = props
-  const { highlight, opacity, non, ...more } = rest
+class Col extends React.Component<Col.Props> {
+  private parser = () => {
+    const { onPress, children, style, touchAfter, size, ...rest } = this.props
+    const { highlight, opacity, non, ...more } = rest
 
-  const flatten = StyleSheet.flatten( style )
-  const rootStyle: ViewStyle = {
-    ...styled( rest, flatten ),
-    flexDirection: 'column',
-    flex: props.size ? props.size : ( flatten && flatten.width ) ? 0 : 1,
+    const flatten = StyleSheet.flatten( style )
+
+    const rootStyle = styled( more, flatten )
+    rootStyle.flexDirection = 'column',
+    rootStyle.flex = size ?? ( flatten && flatten.width ) ? 0 : 1
+
+    const rootProps = styled.removeProps( more )
+
+    return {
+      style: rootStyle,
+      props: rootProps,
+      after: touchAfter,
+      touch: { onPress, highlight, opacity, non, simple: true } as Touch.Simple,
+      children
+    }
   }
-  const rootProps = styled.removeProps( more )
+  public render = () => {
+    const { after, props, style, touch, children } = this.parser()
 
-  if ( touchAfter ) return <View { ...rootProps } style={ rootStyle }>
-    <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } as any }>{children}</Touch>
-  </View>
+    if ( after ) return <View { ...props } style={ style }>
+      <Touch { ...touch }>{children}</Touch>
+    </View>
 
-  return <Touch simple onPress={ onPress } { ...{ highlight, opacity, non } as any }>
-    <View { ...rootProps } style={ rootStyle }>{children}</View>
-  </Touch>
+    return <Touch { ...touch }>
+      <View { ...props } style={ style }>{children}</View>
+    </Touch>
+  }
 }
 
 namespace Col {

@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import styled from '../utils/styled';
 import Touch from './Touch';
-class Block extends React.Component {
+import styled from '../utils/styled';
+class Circle extends React.Component {
     constructor() {
         super(...arguments);
         this.parser = () => {
-            const { onPress, children, style, touchAfter, ...rest } = this.props;
+            const { onPress, children, style, touchAfter, size, ...rest } = this.props;
             const { highlight, opacity, non, ...more } = rest;
             const flatten = StyleSheet.flatten(style);
             const rootStyle = styled(more, flatten);
+            rootStyle.width = size,
+                rootStyle.height = size,
+                rootStyle.borderRadius = size / 2;
             const rootProps = styled.removeProps(more);
             return {
                 style: rootStyle,
@@ -31,4 +34,4 @@ class Block extends React.Component {
         };
     }
 }
-export default Block;
+export default Circle;

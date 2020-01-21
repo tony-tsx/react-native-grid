@@ -1,24 +1,42 @@
 import React from 'react'
-import { ViewProps, View, ViewStyle, StyleSheet } from 'react-native'
+import { ViewProps, View, StyleSheet } from 'react-native'
 import Touch from './Touch'
-import styled from '../../types/utils/styled'
+import styled from '../utils/styled'
 import { StyledOptions } from '../utils/styled'
 
-const Circle: React.StatelessComponent<Circle.Props> = props => {
-  const { touchAfter, style: propStyle, children, size, ...rest } = props
-  const { highlight, opacity, non, ...more } = rest
+class Circle extends React.Component<Circle.Props> {
+  private parser = () => {
+    const { onPress, children, style, touchAfter, size, ...rest } = this.props
+    const { highlight, opacity, non, ...more } = rest
 
-  const flatten = StyleSheet.flatten( propStyle )
-  const style: ViewStyle = {
-    ...styled( more, flatten ),
-    width: size,
-    height: size,
-    borderRadius: size / 2
+    const flatten = StyleSheet.flatten( style )
+    const rootStyle = styled( more, flatten )
+
+    rootStyle.width = size,
+    rootStyle.height = size,
+    rootStyle.borderRadius = size / 2
+
+    const rootProps = styled.removeProps( more )
+
+    return {
+      style: rootStyle,
+      props: rootProps,
+      after: touchAfter,
+      touch: { onPress, highlight, opacity, non, simple: true } as Touch.Simple,
+      children
+    }
   }
+  public render = () => {
+    const { after, props, style, touch, children } = this.parser()
 
-  const root = styled.removeProps( more )
+    if ( after ) return <View { ...props } style={ style }>
+      <Touch { ...touch }>{children}</Touch>
+    </View>
 
-  return <View { ...root } style={ style }>{ children }</View>
+    return <Touch { ...touch }>
+      <View { ...props } style={ style }>{children}</View>
+    </Touch>
+  }
 }
 
 namespace Circle {
