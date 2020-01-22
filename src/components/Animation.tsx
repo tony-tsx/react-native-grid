@@ -1,6 +1,5 @@
 import React, { Component, PureComponent, ComponentType } from 'react'
 import { Animated, ViewStyle } from 'react-native'
-import Circle from './Circle'
 
 type P<C> =
 C extends new ( ...args: any ) => Component< infer P > ? P :

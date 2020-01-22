@@ -21,6 +21,7 @@ const Text: Text = props => {
     h4,
     h5,
     h6,
+
     children,
     style: propStyle,
 

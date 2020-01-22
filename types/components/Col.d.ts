@@ -9,7 +9,7 @@ declare class Col extends React.Component<Col.Props> {
 declare namespace Col {
     type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
         size?: number;
-        touchAfter?: boolean;
+        touchBefore?: boolean;
     };
 }
 export default Col;

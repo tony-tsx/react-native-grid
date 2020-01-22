@@ -8,7 +8,7 @@ declare class Block extends React.Component<Block.Props> {
 }
 declare namespace Block {
     type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
-        touchAfter?: boolean;
+        touchBefore?: boolean;
     };
 }
 export default Block;

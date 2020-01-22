@@ -8,7 +8,7 @@ declare class Circle extends React.Component<Circle.Props> {
 }
 declare namespace Circle {
     type Props = ViewProps & Omit<Touch.Simple, 'simple'> & StyledOptions & {
-        touchAfter?: boolean;
+        touchBefore?: boolean;
         size: number;
     };
 }

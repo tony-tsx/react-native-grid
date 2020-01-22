@@ -6,7 +6,7 @@ import { StyledOptions } from '../utils/styled'
 
 class Circle extends React.Component<Circle.Props> {
   private parser = () => {
-    const { onPress, children, style, touchAfter, size, ...rest } = this.props
+    const { onPress, children, style, touchBefore, size, ...rest } = this.props
     const { highlight, opacity, non, ...more } = rest
 
     const flatten = StyleSheet.flatten( style )
@@ -21,27 +21,27 @@ class Circle extends React.Component<Circle.Props> {
     return {
       style: rootStyle,
       props: rootProps,
-      after: touchAfter,
+      before: touchBefore,
       touch: { onPress, highlight, opacity, non, simple: true } as Touch.Simple,
       children
     }
   }
   public render = () => {
-    const { after, props, style, touch, children } = this.parser()
+    const { before, props, style, touch, children } = this.parser()
 
-    if ( after ) return <View { ...props } style={ style }>
-      <Touch { ...touch }>{children}</Touch>
-    </View>
-
-    return <Touch { ...touch }>
+    if ( before ) return <Touch { ...touch }>
       <View { ...props } style={ style }>{children}</View>
     </Touch>
+
+    return <View { ...props } style={ style }>
+      <Touch { ...touch }>{children}</Touch>
+    </View>
   }
 }
 
 namespace Circle {
   export type Props = ViewProps & Omit<Touch.Simple, 'simple'> & StyledOptions & {
-    touchAfter?: boolean
+    touchBefore?: boolean
     size: number
   }
 }

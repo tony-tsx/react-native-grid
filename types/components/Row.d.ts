@@ -9,7 +9,7 @@ declare class Row extends React.Component<Row.Props> {
 declare namespace Row {
     type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
         onPress?: TouchableOpacityProps['onPress'];
-        touchAfter?: boolean;
+        touchBefore?: boolean;
         size?: number;
     };
 }
