@@ -9,10 +9,12 @@ export interface StyledOptions {
   radius?: number
   bg?: string
   shadow?: boolean | number
+  row?: boolean
+  reverse?: boolean
 }
 
 const styled = (
-  { center, align, justify, absolute, relative, radius, bg, shadow }: StyledOptions,
+  { center, align, justify, absolute, relative, radius, bg, shadow, row, reverse }: StyledOptions,
   initial?: ViewStyle
 ) => {
   const style: ViewStyle = Object.assign( {}, initial )
@@ -66,11 +68,17 @@ const styled = (
     style.shadowRadius = .8 * num
   }
 
+  if ( row ) style.flexDirection = 'row'
+
+  if ( reverse )
+    if ( style.flexDirection === 'row' ) style.flexDirection = 'row-reverse'
+    else style.flexDirection = 'column-reverse'
+
   return style
 }
 
 styled.removeProps = <P extends StyledOptions>( props: P ): Omit<P, keyof StyledOptions> => {
-  const { align, center, justify, absolute, relative, radius, bg, shadow, ...rest } = props
+  const { align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, ...rest } = props
   return rest
 }
 

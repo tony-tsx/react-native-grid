@@ -1,4 +1,4 @@
-const styled = ({ center, align, justify, absolute, relative, radius, bg, shadow }, initial) => {
+const styled = ({ center, align, justify, absolute, relative, radius, bg, shadow, row, reverse }, initial) => {
     const style = Object.assign({}, initial);
     if (align)
         switch (align) {
@@ -47,10 +47,17 @@ const styled = ({ center, align, justify, absolute, relative, radius, bg, shadow
         style.shadowOpacity = 0.3;
         style.shadowRadius = .8 * num;
     }
+    if (row)
+        style.flexDirection = 'row';
+    if (reverse)
+        if (style.flexDirection === 'row')
+            style.flexDirection = 'row-reverse';
+        else
+            style.flexDirection = 'column-reverse';
     return style;
 };
 styled.removeProps = (props) => {
-    const { align, center, justify, absolute, relative, radius, bg, shadow, ...rest } = props;
+    const { align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, ...rest } = props;
     return rest;
 };
 export default styled;

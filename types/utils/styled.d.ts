@@ -8,9 +8,11 @@ export interface StyledOptions {
     radius?: number;
     bg?: string;
     shadow?: boolean | number;
+    row?: boolean;
+    reverse?: boolean;
 }
 declare const styled: {
-    ({ center, align, justify, absolute, relative, radius, bg, shadow }: StyledOptions, initial?: ViewStyle | undefined): ViewStyle;
-    removeProps<P extends StyledOptions>(props: P): Pick<P, Exclude<keyof P, "center" | "absolute" | "relative" | "justify" | "align" | "radius" | "bg" | "shadow">>;
+    ({ center, align, justify, absolute, relative, radius, bg, shadow, row, reverse }: StyledOptions, initial?: ViewStyle | undefined): ViewStyle;
+    removeProps<P extends StyledOptions>(props: P): Pick<P, Exclude<keyof P, "center" | "reverse" | "row" | "absolute" | "relative" | "justify" | "align" | "radius" | "bg" | "shadow">>;
 };
 export default styled;
