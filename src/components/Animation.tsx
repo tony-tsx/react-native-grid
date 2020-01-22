@@ -25,7 +25,7 @@ class Animation<C> extends Component<Props<C>> {
   }
   public render = () => {
     const { children, component, ...rest } = this.props
-    return <this.Component {...rest as any}>{component}</this.Component>
+    return <this.Component {...rest as any}>{children}</this.Component>
   }
 }
 

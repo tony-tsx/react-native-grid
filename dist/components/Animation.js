@@ -6,7 +6,7 @@ class Animation extends Component {
         super(props);
         this.render = () => {
             const { children, component, ...rest } = this.props;
-            return <this.Component {...rest}>{component}</this.Component>;
+            return <this.Component {...rest}>{children}</this.Component>;
         };
         if (!props.component)
             throw new Error('component as required');
