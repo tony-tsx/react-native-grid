@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ViewProps, TouchableOpacityProps, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native'
+import { View, ViewProps, TouchableOpacityProps, StyleSheet } from 'react-native'
 import styled, { StyledOptions } from '../utils/styled'
 import Touch from './Touch'
 
@@ -12,7 +12,7 @@ class Row extends React.Component<Row.Props> {
 
     const rootStyle = styled( more, flatten )
     rootStyle.flexDirection = 'row',
-    rootStyle.flex = size ?? ( flatten && flatten.width ) ? 0 : 1
+    rootStyle.flex = size ? size : ( flatten && flatten.height ) ? 0 : 1
 
     const rootProps = styled.removeProps( more )
 

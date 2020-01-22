@@ -11,7 +11,7 @@ class Row extends React.Component {
             const flatten = StyleSheet.flatten(style);
             const rootStyle = styled(more, flatten);
             rootStyle.flexDirection = 'row',
-                rootStyle.flex = size ?? (flatten && flatten.width) ? 0 : 1;
+                rootStyle.flex = size ? size : (flatten && flatten.height) ? 0 : 1;
             const rootProps = styled.removeProps(more);
             return {
                 style: rootStyle,

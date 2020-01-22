@@ -4,6 +4,7 @@ import GridBlock from './components/Block'
 import GridTouch from './components/Touch'
 import GridText from './components/Text'
 import GridCircle from './components/Circle'
+import GridAnimation from './components/Animation'
 
 namespace Grid {
   export import Col = GridCol
@@ -12,6 +13,7 @@ namespace Grid {
   export import Touch = GridTouch
   export import Text = GridText
   export import Circle = GridCircle
+  export import Animation = GridAnimation
 }
 
 export import Col = Grid.Col
@@ -20,5 +22,6 @@ export import Block = Grid.Block
 export import Touch = Grid.Touch
 export import Text = Grid.Text
 export import Circle = Grid.Circle
+export import Animation = Grid.Animation
 
 export default Grid

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row } from '../src'
+import { Row } from '..'
 import { create } from 'react-test-renderer'
 
 test( 'Component Row', () => {

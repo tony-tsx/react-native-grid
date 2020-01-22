@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ViewProps, StyleSheet, ViewStyle } from 'react-native'
+import { View, ViewProps, StyleSheet } from 'react-native'
 import styled, { StyledOptions } from '../utils/styled'
 import Touch from './Touch'
 
@@ -12,7 +12,7 @@ class Col extends React.Component<Col.Props> {
 
     const rootStyle = styled( more, flatten )
     rootStyle.flexDirection = 'column',
-    rootStyle.flex = size ?? ( flatten && flatten.width ) ? 0 : 1
+    rootStyle.flex = size ? size : ( flatten && flatten.width ) ? 0 : 1
 
     const rootProps = styled.removeProps( more )
 

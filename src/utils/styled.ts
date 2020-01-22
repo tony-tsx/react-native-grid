@@ -7,10 +7,12 @@ export interface StyledOptions {
   absolute?: boolean
   relative?: boolean
   radius?: number
+  bg?: string
+  shadow?: boolean | number
 }
 
 const styled = (
-  { center, align, justify, absolute, relative, radius }: StyledOptions,
+  { center, align, justify, absolute, relative, radius, bg, shadow }: StyledOptions,
   initial?: ViewStyle
 ) => {
   const style: ViewStyle = Object.assign( {}, initial )
@@ -53,11 +55,22 @@ const styled = (
 
   style.borderRadius = radius
 
+  if ( bg ) style.backgroundColor = bg
+
+  if ( shadow ) {
+    const num = typeof shadow === 'number' ? shadow : 5
+    style.elevation = num
+    style.shadowColor = 'black'
+    style.shadowOffset = { width: 0, height: num * .5 }
+    style.shadowOpacity = 0.3
+    style.shadowRadius = .8 * num
+  }
+
   return style
 }
 
 styled.removeProps = <P extends StyledOptions>( props: P ): Omit<P, keyof StyledOptions> => {
-  const { align, center, justify, absolute, relative, radius, ...rest } = props
+  const { align, center, justify, absolute, relative, radius, bg, shadow, ...rest } = props
   return rest
 }
 
