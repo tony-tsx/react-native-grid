@@ -19,6 +19,7 @@ const parser = <P extends Styled.Props>( {
   m,
   p,
   w,
+  overflow,
   style: propStyle,
   ...props
 }: P ): { style: Styled.Styles.Merge, props: Omit<P, keyof Styled.Props> } => {
@@ -170,6 +171,9 @@ const parser = <P extends Styled.Props>( {
       }
 
     else style.padding = p
+
+  // @ts-ignore
+  if ( overflow ) style.overflow = typeof overflow === 'string' ? overflow : 'hidden'
 
   return { style: StyleSheet.flatten( [ style, propStyle ] ) as Styled.Styles.Merge, props }
 }

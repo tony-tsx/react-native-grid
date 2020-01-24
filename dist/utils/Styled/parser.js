@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, style: propStyle, ...props }) => {
+const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, style: propStyle, ...props }) => {
     const style = {};
     if (align)
         switch (align) {
@@ -126,6 +126,9 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
             }
         else
             style.padding = p;
+    // @ts-ignore
+    if (overflow)
+        style.overflow = typeof overflow === 'string' ? overflow : 'hidden';
     return { style: StyleSheet.flatten([style, propStyle]), props };
 };
 export default parser;

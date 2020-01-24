@@ -1,8 +1,8 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 declare namespace Styled {
-    export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, style: propStyle, ...props }: P) => {
+    export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, style: propStyle, ...props }: P) => {
         style: Styles.Merge;
-        props: Pick<P, Exclude<keyof P, "center" | "reverse" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "p" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w">>;
+        props: Pick<P, Exclude<keyof P, "center" | "reverse" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "p" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "overflow">>;
     };
     export namespace Styles {
         type Merge = ViewStyle & TextStyle & ImageStyle;
@@ -62,8 +62,9 @@ declare namespace Styled {
         row?: boolean;
         reverse?: boolean;
         bg?: string;
-        flex?: number;
+        flex?: boolean | number;
         percent?: number;
+        overflow?: boolean | 'visible' | 'hidden' | 'scroll';
     }
     export {};
 }

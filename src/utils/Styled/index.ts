@@ -78,9 +78,10 @@ namespace Styled {
 
     bg?: string
 
-    flex?: number
+    flex?: boolean | number
 
     percent?: number
+    overflow?: boolean | 'visible' | 'hidden' | 'scroll'
   }
 }
 
