@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { WeakValidationMap } from 'react';
 import { ViewProps } from 'react-native';
-import Touch from './Touch';
-import { StyledOptions } from '../utils/styled';
+import Styled from '../utils/Styled';
 declare class Circle extends React.Component<Circle.Props> {
+    static propTypes: WeakValidationMap<Omit<Circle.Props, keyof ViewProps | keyof Styled.Props>>;
     private parser;
     render: () => JSX.Element;
 }
 declare namespace Circle {
-    type Props = ViewProps & Omit<Touch.Simple, 'simple'> & StyledOptions & {
-        touchBefore?: boolean;
+    type Props = ViewProps & Styled.Props & {
         size: number;
     };
 }

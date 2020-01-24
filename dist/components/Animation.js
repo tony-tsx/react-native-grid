@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated } from 'react-native';
+import Types from 'prop-types';
 const storage = {};
 class Animation extends Component {
     constructor(props) {
@@ -17,4 +18,7 @@ class Animation extends Component {
         this.Component = storage[props.component.__animation__];
     }
 }
+Animation.propTypes = {
+    component: Types.elementType.isRequired
+};
 export default Animation;

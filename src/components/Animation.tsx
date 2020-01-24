@@ -1,5 +1,6 @@
-import React, { Component, PureComponent, ComponentType } from 'react'
+import React, { Component, PureComponent, ComponentType, WeakValidationMap } from 'react'
 import { Animated, ViewStyle } from 'react-native'
+import Types from 'prop-types'
 
 type P<C> =
 C extends new ( ...args: any ) => Component< infer P > ? P :
@@ -13,6 +14,9 @@ type Props<C> = { component: any, style?: {
 const storage: any = {}
 
 class Animation<C> extends Component<Props<C>> {
+  public static propTypes: WeakValidationMap<Props<any>> = {
+    component: Types.elementType.isRequired
+  }
   private Component: ComponentType<Props<C>>
   constructor( props: Props<C> ) {
     super( props )

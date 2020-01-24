@@ -1,49 +1,36 @@
-import React from 'react'
-import { ViewProps, View, StyleSheet } from 'react-native'
-import Touch from './Touch'
-import styled from '../utils/styled'
-import { StyledOptions } from '../utils/styled'
+import React, { WeakValidationMap } from 'react'
+import { ViewProps, View } from 'react-native'
+import Styled from '../utils/Styled'
+import { number } from 'prop-types'
 
 class Circle extends React.Component<Circle.Props> {
+  public static propTypes: WeakValidationMap<Omit<Circle.Props, keyof ViewProps | keyof Styled.Props>> = {
+    size: number.isRequired
+  }
   private parser = () => {
-    const { onPress, children, style, touchBefore, size, ...rest } = this.props
-    const { highlight, opacity, non, ...more } = rest
+    const { children, size, ...rest } = this.props
 
-    const flatten = StyleSheet.flatten( style )
-    const rootStyle = styled( more, flatten )
+    const { style, props } = Styled.parser( rest )
 
-    rootStyle.width = size,
-    rootStyle.height = size,
-    rootStyle.borderRadius = size / 2
-
-    const rootProps = styled.removeProps( more )
+    style.width = size,
+    style.height = size,
+    style.borderRadius = size / 2
 
     return {
-      style: rootStyle,
-      props: rootProps,
-      before: touchBefore,
-      touch: { onPress, highlight, opacity, non, simple: true } as Touch.Simple,
+      style,
+      props,
       children
     }
   }
   public render = () => {
-    const { before, props, style, touch, children } = this.parser()
+    const { props, style, children } = this.parser()
 
-    if ( before ) return <Touch { ...touch }>
-      <View { ...props } style={ style }>{children}</View>
-    </Touch>
-
-    return <View { ...props } style={ style }>
-      <Touch { ...touch }>{children}</Touch>
-    </View>
+    return <View { ...props } style={ style }>{children}</View>
   }
 }
 
 namespace Circle {
-  export type Props = ViewProps & Omit<Touch.Simple, 'simple'> & StyledOptions & {
-    touchBefore?: boolean
-    size: number
-  }
+  export type Props = ViewProps & Styled.Props & { size: number }
 }
 
 export default Circle

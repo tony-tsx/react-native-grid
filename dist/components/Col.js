@@ -1,36 +1,28 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import styled from '../utils/styled';
-import Touch from './Touch';
+import { View } from 'react-native';
+import Styled from '../utils/Styled';
+import { number } from 'prop-types';
 class Col extends React.Component {
     constructor() {
         super(...arguments);
         this.parser = () => {
-            const { onPress, children, style, touchBefore, size, ...rest } = this.props;
-            const { highlight, opacity, non, ...more } = rest;
-            const flatten = StyleSheet.flatten(style);
-            const rootStyle = styled(more, flatten);
-            rootStyle.flexDirection = 'column',
-                rootStyle.flex = size ? size : (flatten && flatten.width) ? 0 : 1;
-            const rootProps = styled.removeProps(more);
+            const { children, size, ...rest } = this.props;
+            const { style, props } = Styled.parser(rest);
+            style.flexDirection = 'column',
+                style.flex = size ? size : (style && style.width) ? 0 : 1;
             return {
-                style: rootStyle,
-                props: rootProps,
-                before: touchBefore,
-                touch: { onPress, highlight, opacity, non, simple: true },
+                style,
+                props,
                 children
             };
         };
         this.render = () => {
-            const { before, props, style, touch, children } = this.parser();
-            if (before)
-                return <Touch {...touch}>
-      <View {...props} style={style}>{children}</View>
-    </Touch>;
-            return <View {...props} style={style}>
-      <Touch {...touch}>{children}</Touch>
-    </View>;
+            const { props, style, children } = this.parser();
+            return <View {...props} style={style}>{children}</View>;
         };
     }
 }
+Col.propTypes = {
+    size: number
+};
 export default Col;

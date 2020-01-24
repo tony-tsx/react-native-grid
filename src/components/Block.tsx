@@ -1,42 +1,28 @@
 import React from 'react'
-import { View, StyleSheet, ViewProps } from 'react-native'
-import styled, { StyledOptions } from '../utils/styled'
-import Touch from './Touch'
+import { View, ViewProps } from 'react-native'
+import Styled from '../utils/Styled'
 
 class Block extends React.Component<Block.Props> {
   private parser = () => {
-    const { onPress, children, style, touchBefore, ...rest } = this.props
-    const { highlight, opacity, non, ...more } = rest
+    const { children, ...rest } = this.props
 
-    const flatten = StyleSheet.flatten( style )
-    const rootStyle = styled( more, flatten )
-    const rootProps = styled.removeProps( more )
+    const { style, props } = Styled.parser( rest )
 
     return {
-      style: rootStyle,
-      props: rootProps,
-      before: touchBefore,
-      touch: { onPress, highlight, opacity, non, simple: true } as Touch.Simple,
+      style,
+      props,
       children
     }
   }
   public render = () => {
-    const { before, props, style, touch, children } = this.parser()
+    const { props, style, children } = this.parser()
 
-    if ( before ) return <Touch { ...touch }>
-      <View { ...props } style={ style }>{children}</View>
-    </Touch>
-
-    return <View { ...props } style={ style }>
-      <Touch { ...touch }>{children}</Touch>
-    </View>
+    return <View { ...props } style={ style }>{children}</View>
   }
 }
 
 namespace Block {
-  export type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
-    touchBefore?: boolean
-  }
+  export type Props = ViewProps & Styled.Props
 }
 
 export default Block

@@ -17,10 +17,7 @@ declare namespace Touch {
         highlight?: boolean;
         opacity?: boolean;
     }
-    type Simple = {
-        simple: boolean;
-    } & ((Highlight & Pick<TouchableHighlightProps, 'onPress'>) | (Opacity & Pick<TouchableOpacityProps, 'onPress'>) | (Non & Pick<TouchableWithoutFeedbackProps, 'onPress'>));
-    type Props = (Highlight & TouchableHighlightProps) | (Opacity & TouchableOpacityProps) | (Non & TouchableWithoutFeedbackProps) | Simple;
+    type Props = (Highlight & TouchableHighlightProps) | (Opacity & TouchableOpacityProps) | (Non & TouchableWithoutFeedbackProps);
 }
 export declare type TouchProps = Touch.Props;
 export default Touch;

@@ -1,37 +1,29 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Touch from './Touch';
-import styled from '../utils/styled';
+import { View } from 'react-native';
+import Styled from '../utils/Styled';
+import { number } from 'prop-types';
 class Circle extends React.Component {
     constructor() {
         super(...arguments);
         this.parser = () => {
-            const { onPress, children, style, touchBefore, size, ...rest } = this.props;
-            const { highlight, opacity, non, ...more } = rest;
-            const flatten = StyleSheet.flatten(style);
-            const rootStyle = styled(more, flatten);
-            rootStyle.width = size,
-                rootStyle.height = size,
-                rootStyle.borderRadius = size / 2;
-            const rootProps = styled.removeProps(more);
+            const { children, size, ...rest } = this.props;
+            const { style, props } = Styled.parser(rest);
+            style.width = size,
+                style.height = size,
+                style.borderRadius = size / 2;
             return {
-                style: rootStyle,
-                props: rootProps,
-                before: touchBefore,
-                touch: { onPress, highlight, opacity, non, simple: true },
+                style,
+                props,
                 children
             };
         };
         this.render = () => {
-            const { before, props, style, touch, children } = this.parser();
-            if (before)
-                return <Touch {...touch}>
-      <View {...props} style={style}>{children}</View>
-    </Touch>;
-            return <View {...props} style={style}>
-      <Touch {...touch}>{children}</Touch>
-    </View>;
+            const { props, style, children } = this.parser();
+            return <View {...props} style={style}>{children}</View>;
         };
     }
 }
+Circle.propTypes = {
+    size: number.isRequired
+};
 export default Circle;

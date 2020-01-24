@@ -3,5 +3,6 @@ import { Row } from '..'
 import { create } from 'react-test-renderer'
 
 test( 'Component Row', () => {
-  const component = create( <Row></Row> )
+  const component = create( <Row /> )
+  console.log( component.toJSON() )
 } )

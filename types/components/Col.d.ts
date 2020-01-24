@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { WeakValidationMap } from 'react';
 import { ViewProps } from 'react-native';
-import { StyledOptions } from '../utils/styled';
-import Touch from './Touch';
+import Styled from '../utils/Styled';
 declare class Col extends React.Component<Col.Props> {
+    static propTypes: WeakValidationMap<Omit<Col.Props, keyof ViewProps | keyof Styled.Props>>;
     private parser;
     render: () => JSX.Element;
 }
 declare namespace Col {
-    type Props = ViewProps & StyledOptions & Omit<Touch.Simple, 'simple'> & {
+    type Props = ViewProps & Styled.Props & {
         size?: number;
-        touchBefore?: boolean;
     };
 }
 export default Col;

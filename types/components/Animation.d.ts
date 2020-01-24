@@ -1,4 +1,4 @@
-import { Component, PureComponent } from 'react';
+import { Component, PureComponent, WeakValidationMap } from 'react';
 import { Animated, ViewStyle } from 'react-native';
 declare type P<C> = C extends new (...args: any) => Component<infer P> ? P : C extends new (...args: any) => PureComponent<infer P> ? P : never;
 declare type Props<C> = {
@@ -10,6 +10,7 @@ declare type Props<C> = {
     [key: string]: any;
 } : P<C>);
 declare class Animation<C> extends Component<Props<C>> {
+    static propTypes: WeakValidationMap<Props<any>>;
     private Component;
     constructor(props: Props<C>);
     render: () => JSX.Element;

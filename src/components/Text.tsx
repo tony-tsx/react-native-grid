@@ -52,9 +52,6 @@ const Text: Text = props => {
   style.textTransform = transform
 
   if ( family ) style.fontFamily = family
-  if ( true ) void 0
-  if ( true ) void 0
-  if ( true ) void 0
 
   if ( h1 ) return <NativeText { ...rest } style={ [ Text.presets.h1, style, propStyle ] }>{children}</NativeText>
   if ( h2 ) return <NativeText { ...rest } style={ [ Text.presets.h2, style, propStyle ] }>{children}</NativeText>

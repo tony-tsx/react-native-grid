@@ -1,33 +1,21 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import styled from '../utils/styled';
-import Touch from './Touch';
+import { View } from 'react-native';
+import Styled from '../utils/Styled';
 class Block extends React.Component {
     constructor() {
         super(...arguments);
         this.parser = () => {
-            const { onPress, children, style, touchBefore, ...rest } = this.props;
-            const { highlight, opacity, non, ...more } = rest;
-            const flatten = StyleSheet.flatten(style);
-            const rootStyle = styled(more, flatten);
-            const rootProps = styled.removeProps(more);
+            const { children, ...rest } = this.props;
+            const { style, props } = Styled.parser(rest);
             return {
-                style: rootStyle,
-                props: rootProps,
-                before: touchBefore,
-                touch: { onPress, highlight, opacity, non, simple: true },
+                style,
+                props,
                 children
             };
         };
         this.render = () => {
-            const { before, props, style, touch, children } = this.parser();
-            if (before)
-                return <Touch {...touch}>
-      <View {...props} style={style}>{children}</View>
-    </Touch>;
-            return <View {...props} style={style}>
-      <Touch {...touch}>{children}</Touch>
-    </View>;
+            const { props, style, children } = this.parser();
+            return <View {...props} style={style}>{children}</View>;
         };
     }
 }
