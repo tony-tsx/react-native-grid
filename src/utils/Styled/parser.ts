@@ -20,6 +20,7 @@ const parser = <P extends Styled.Props>( {
   p,
   w,
   overflow,
+  index,
   style: propStyle,
   ...props
 }: P ): { style: Styled.Styles.Merge, props: Omit<P, keyof Styled.Props> } => {
@@ -86,11 +87,21 @@ const parser = <P extends Styled.Props>( {
 
     if ( Array.isArray( h ) ) {
 
-      const [ height, maxHeight, minHeight ] = h
+      const [ dheight, maxHeight, minHeight ] = h
 
-      style.height = height ?? undefined
-      style.maxHeight = maxHeight ?? undefined
-      style.minHeight = minHeight ?? undefined
+      if ( percent ) {
+
+        style.height = dheight ? height * dheight : undefined
+        style.maxHeight = maxHeight ? height * maxHeight : undefined
+        style.minHeight = minHeight ? height * minHeight : undefined
+
+      } else {
+
+        style.height = dheight ?? undefined
+        style.maxHeight = maxHeight ?? undefined
+        style.minHeight = minHeight ?? undefined
+
+      }
 
     } else if ( typeof h === 'number' )
 
@@ -104,11 +115,21 @@ const parser = <P extends Styled.Props>( {
 
     if ( Array.isArray( w ) ) {
 
-      const [ width, maxWidth, minWidth ] = w
+      const [ dwidth, maxWidth, minWidth ] = w
 
-      style.width = width ?? style.width
-      style.maxWidth = maxWidth ?? style.maxWidth
-      style.minWidth = minWidth ?? style.minWidth
+      if ( percent ) {
+
+        style.width = dwidth ? width * dwidth : style.width
+        style.maxWidth = maxWidth ? width * maxWidth : style.maxWidth
+        style.minWidth = minWidth ? width * minWidth : style.minWidth
+
+      } else {
+
+        style.width = dwidth ?? style.width
+        style.maxWidth = maxWidth ?? style.maxWidth
+        style.minWidth = minWidth ?? style.minWidth
+
+      }
 
     } else if ( typeof w === 'number' )
 
@@ -174,6 +195,8 @@ const parser = <P extends Styled.Props>( {
 
   // @ts-ignore
   if ( overflow ) style.overflow = typeof overflow === 'string' ? overflow : 'hidden'
+
+  if ( index ) style.zIndex = index
 
   return { style: StyleSheet.flatten( [ style, propStyle ] ) as Styled.Styles.Merge, props }
 }

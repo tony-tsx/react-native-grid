@@ -30,7 +30,7 @@ namespace Styled {
   export type Resolution =
     | boolean
     | number
-    | [ ( number | string )?, ( number | string )?, ( number | string )? ]
+    | [ ( number )?, ( number )?, ( number )? ]
 
   /**
    * The space value has 4 forms
@@ -82,6 +82,7 @@ namespace Styled {
 
     percent?: number
     overflow?: boolean | 'visible' | 'hidden' | 'scroll'
+    index?: number
   }
 }
 

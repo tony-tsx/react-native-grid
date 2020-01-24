@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, style: propStyle, ...props }) => {
+const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, style: propStyle, ...props }) => {
     const style = {};
     if (align)
         switch (align) {
@@ -60,10 +60,17 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
         style.flex = typeof flex === 'number' ? flex : 1;
     if (h)
         if (Array.isArray(h)) {
-            const [height, maxHeight, minHeight] = h;
-            style.height = height ?? undefined;
-            style.maxHeight = maxHeight ?? undefined;
-            style.minHeight = minHeight ?? undefined;
+            const [dheight, maxHeight, minHeight] = h;
+            if (percent) {
+                style.height = dheight ? height * dheight : undefined;
+                style.maxHeight = maxHeight ? height * maxHeight : undefined;
+                style.minHeight = minHeight ? height * minHeight : undefined;
+            }
+            else {
+                style.height = dheight ?? undefined;
+                style.maxHeight = maxHeight ?? undefined;
+                style.minHeight = minHeight ?? undefined;
+            }
         }
         else if (typeof h === 'number')
             if (percent)
@@ -74,10 +81,17 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
             style.height = height;
     if (w)
         if (Array.isArray(w)) {
-            const [width, maxWidth, minWidth] = w;
-            style.width = width ?? style.width;
-            style.maxWidth = maxWidth ?? style.maxWidth;
-            style.minWidth = minWidth ?? style.minWidth;
+            const [dwidth, maxWidth, minWidth] = w;
+            if (percent) {
+                style.width = dwidth ? width * dwidth : style.width;
+                style.maxWidth = maxWidth ? width * maxWidth : style.maxWidth;
+                style.minWidth = minWidth ? width * minWidth : style.minWidth;
+            }
+            else {
+                style.width = dwidth ?? style.width;
+                style.maxWidth = maxWidth ?? style.maxWidth;
+                style.minWidth = minWidth ?? style.minWidth;
+            }
         }
         else if (typeof w === 'number')
             if (percent)
@@ -129,6 +143,8 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
     // @ts-ignore
     if (overflow)
         style.overflow = typeof overflow === 'string' ? overflow : 'hidden';
+    if (index)
+        style.zIndex = index;
     return { style: StyleSheet.flatten([style, propStyle]), props };
 };
 export default parser;

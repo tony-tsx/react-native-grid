@@ -1,8 +1,8 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 declare namespace Styled {
-    export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, style: propStyle, ...props }: P) => {
+    export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, style: propStyle, ...props }: P) => {
         style: Styles.Merge;
-        props: Pick<P, Exclude<keyof P, "center" | "reverse" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "p" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "overflow">>;
+        props: Pick<P, Exclude<keyof P, "center" | "reverse" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "p" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "overflow" | "index">>;
     };
     export namespace Styles {
         type Merge = ViewStyle & TextStyle & ImageStyle;
@@ -24,7 +24,7 @@ declare namespace Styled {
      * 2nd number is the value of the resolution itself;
      * 3rd ((string | number)?) [3] is the resolution value, the minimum value and the maximum value respectively;
      */
-    export type Resolution = boolean | number | [(number | string)?, (number | string)?, (number | string)?];
+    export type Resolution = boolean | number | [(number)?, (number)?, (number)?];
     /**
      * The space value has 4 forms
      *
@@ -65,6 +65,7 @@ declare namespace Styled {
         flex?: boolean | number;
         percent?: number;
         overflow?: boolean | 'visible' | 'hidden' | 'scroll';
+        index?: number;
     }
     export {};
 }
