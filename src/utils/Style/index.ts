@@ -1,7 +1,7 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native'
 import styledParser from './parser'
 
-namespace Styled {
+namespace Style {
 
   export const parser = styledParser
 
@@ -43,9 +43,9 @@ namespace Styled {
    */
   export type Space =
     | number
-    | [ number, number ]
-    | [ number, number, number ]
-    | [ number, number, number, number ]
+    | [ ( number )?, ( number )? ]
+    | [ ( number )?, ( number )?, ( number )? ]
+    | [ ( number )?, ( number )?, ( number )?, ( number )? ]
 
   interface Resolutions {
     /**
@@ -71,7 +71,7 @@ namespace Styled {
 
   export interface Props extends Centralization, Positions, Resolutions, Spaces {
     style?: Styles.Merge | Styles.Change
-    radius?: number
+    radius?: number | Space
     shadow?: boolean | number
     row?: boolean
     reverse?: boolean
@@ -80,10 +80,11 @@ namespace Styled {
 
     flex?: boolean | number
 
-    percent?: number
+    percent?: boolean
     overflow?: boolean | 'visible' | 'hidden' | 'scroll'
     index?: number
+
   }
 }
 
-export default Styled
+export default Style

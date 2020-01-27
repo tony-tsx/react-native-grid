@@ -38,7 +38,28 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
         style.position = 'relative';
     else if (absolute)
         style.position = 'absolute';
-    style.borderRadius = radius;
+    if (radius || radius === 0)
+        if (Array.isArray(radius))
+            if (radius.length === 2) {
+                style.borderTopLeftRadius = radius[0];
+                style.borderTopRightRadius = radius[1];
+                style.borderBottomRightRadius = radius[0];
+                style.borderBottomLeftRadius = radius[1];
+            }
+            else if (radius.length === 3) {
+                style.borderTopLeftRadius = radius[0];
+                style.borderTopRightRadius = radius[1];
+                style.borderBottomRightRadius = radius[2];
+                style.borderBottomLeftRadius = radius[1];
+            }
+            else {
+                style.borderTopLeftRadius = radius[0];
+                style.borderTopRightRadius = radius[1];
+                style.borderBottomRightRadius = radius[2];
+                style.borderBottomLeftRadius = radius[3];
+            }
+        else
+            style.borderRadius = radius;
     if (bg)
         style.backgroundColor = bg;
     if (shadow) {
@@ -95,9 +116,9 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
         }
         else if (typeof w === 'number')
             if (percent)
-                style.height = width * w;
+                style.width = width * w;
             else
-                style.height = w;
+                style.width = w;
         else
             style.width = width;
     if (m || m === 0)

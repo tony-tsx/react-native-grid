@@ -1,13 +1,14 @@
 import React, { WeakValidationMap } from 'react';
 import { ViewProps } from 'react-native';
-import Styled from '../utils/Styled';
+import Style from '../utils/Style';
+import Event from '../utils/Event';
 declare class Row extends React.Component<Row.Props> {
-    static propTypes: WeakValidationMap<Omit<Row.Props, keyof ViewProps | keyof Styled.Props>>;
+    static propTypes: WeakValidationMap<Omit<Row.Props, keyof ViewProps | keyof Style.Props>>;
     private parser;
     render: () => JSX.Element;
 }
 declare namespace Row {
-    type Props = ViewProps & Styled.Props & {
+    type Props = ViewProps & Style.Props & Event.On<Event.View> & {
         size?: number;
     };
 }

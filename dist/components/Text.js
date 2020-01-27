@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text as NativeText } from 'react-native';
 const Text = props => {
-    const { h1, h2, h3, h4, h5, h6, children, style: propStyle, italic, bold, variant, vertical, align, decoration, direction, family, spacing, transform, ...rest } = props;
+    const { h1, h2, h3, h4, h5, h6, children, style: propStyle, size, color, italic, bold, variant, vertical, align, decoration, direction, family, spacing, transform, ...rest } = props;
     const style = {};
     if (italic)
         style.fontStyle = 'italic';
@@ -16,6 +16,10 @@ const Text = props => {
     style.textTransform = transform;
     if (family)
         style.fontFamily = family;
+    if (typeof size === 'number')
+        style.fontSize = size;
+    if (color)
+        style.color = color;
     if (h1)
         return <NativeText {...rest} style={[Text.presets.h1, style, propStyle]}>{children}</NativeText>;
     if (h2)

@@ -1,5 +1,5 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
-declare namespace Styled {
+declare namespace Style {
     export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, style: propStyle, ...props }: P) => {
         style: Styles.Merge;
         props: Pick<P, Exclude<keyof P, "center" | "reverse" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "p" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "overflow" | "index">>;
@@ -34,7 +34,7 @@ declare namespace Styled {
      * top, right, bottom and left and the same value of the right is attributed to the left.
      * 4th number [3] is the space value in relation to the top, right, bottom and left respectively
      */
-    export type Space = number | [number, number] | [number, number, number] | [number, number, number, number];
+    export type Space = number | [(number)?, (number)?] | [(number)?, (number)?, (number)?] | [(number)?, (number)?, (number)?, (number)?];
     interface Resolutions {
         /**
          * Height resolution value
@@ -57,16 +57,16 @@ declare namespace Styled {
     }
     export interface Props extends Centralization, Positions, Resolutions, Spaces {
         style?: Styles.Merge | Styles.Change;
-        radius?: number;
+        radius?: number | Space;
         shadow?: boolean | number;
         row?: boolean;
         reverse?: boolean;
         bg?: string;
         flex?: boolean | number;
-        percent?: number;
+        percent?: boolean;
         overflow?: boolean | 'visible' | 'hidden' | 'scroll';
         index?: number;
     }
     export {};
 }
-export default Styled;
+export default Style;

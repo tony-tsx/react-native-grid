@@ -31,6 +31,8 @@ declare namespace Text {
         decoration?: 'solid' | 'double' | 'dotted' | 'dashed';
         transform?: 'uppercase' | 'lowercase' | 'capitalize';
         direction?: 'auto' | 'ltr' | 'rtl';
+        color?: string;
+        size?: number;
     }
 }
 export default Text;

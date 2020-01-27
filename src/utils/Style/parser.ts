@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import Styled from '.'
+import Style from '.'
 const { width, height } = Dimensions.get( 'screen' )
 
-const parser = <P extends Styled.Props>( {
+const parser = <P extends Style.Props>( {
   align,
   center,
   justify,
@@ -23,8 +23,8 @@ const parser = <P extends Styled.Props>( {
   index,
   style: propStyle,
   ...props
-}: P ): { style: Styled.Styles.Merge, props: Omit<P, keyof Styled.Props> } => {
-  const style: Styled.Styles.Merge = {}
+}: P ): { style: Style.Styles.Merge, props: Omit<P, keyof Style.Props> } => {
+  const style: Style.Styles.Merge = {}
 
   if ( align )
     switch ( align ) {
@@ -62,7 +62,32 @@ const parser = <P extends Styled.Props>( {
   if ( relative ) style.position = 'relative'
   else if ( absolute ) style.position = 'absolute'
 
-  style.borderRadius = radius
+  if ( radius || radius === 0 )
+    if ( Array.isArray( radius ) )
+      if ( radius.length === 2 ) {
+
+        style.borderTopLeftRadius = radius[0]
+        style.borderTopRightRadius = radius[1]
+        style.borderBottomRightRadius = radius[0]
+        style.borderBottomLeftRadius = radius[1]
+
+      } else if ( radius.length === 3 ) {
+
+        style.borderTopLeftRadius = radius[0]
+        style.borderTopRightRadius = radius[1]
+        style.borderBottomRightRadius = radius[2]
+        style.borderBottomLeftRadius = radius[1]
+
+      } else {
+
+        style.borderTopLeftRadius = radius[0]
+        style.borderTopRightRadius = radius[1]
+        style.borderBottomRightRadius = radius[2]
+        style.borderBottomLeftRadius = radius[3]
+
+      }
+
+    else style.borderRadius = radius
 
   if ( bg ) style.backgroundColor = bg
 
@@ -133,9 +158,9 @@ const parser = <P extends Styled.Props>( {
 
     } else if ( typeof w === 'number' )
 
-      if ( percent ) style.height = width * w
+      if ( percent ) style.width = width * w
 
-      else style.height = w
+      else style.width = w
 
     else style.width = width
 
@@ -198,7 +223,7 @@ const parser = <P extends Styled.Props>( {
 
   if ( index ) style.zIndex = index
 
-  return { style: StyleSheet.flatten( [ style, propStyle ] ) as Styled.Styles.Merge, props }
+  return { style: StyleSheet.flatten( [ style, propStyle ] ) as Style.Styles.Merge, props }
 }
 
 export default parser

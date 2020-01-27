@@ -25,6 +25,9 @@ const Text: Text = props => {
     children,
     style: propStyle,
 
+    size,
+    color,
+
     italic,
     bold,
     variant,
@@ -52,6 +55,9 @@ const Text: Text = props => {
   style.textTransform = transform
 
   if ( family ) style.fontFamily = family
+
+  if ( typeof size === 'number' ) style.fontSize = size
+  if ( color ) style.color = color
 
   if ( h1 ) return <NativeText { ...rest } style={ [ Text.presets.h1, style, propStyle ] }>{children}</NativeText>
   if ( h2 ) return <NativeText { ...rest } style={ [ Text.presets.h2, style, propStyle ] }>{children}</NativeText>
@@ -93,6 +99,10 @@ namespace Text {
     transform?: 'uppercase' | 'lowercase' | 'capitalize'
 
     direction?: 'auto' | 'ltr' | 'rtl'
+
+    color?: string
+
+    size?: number
   }
 }
 
