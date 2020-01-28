@@ -21,6 +21,7 @@ const parser = <P extends Style.Props>( {
   w,
   overflow,
   index,
+  full,
   style: propStyle,
   ...props
 }: P ): { style: Style.Styles.Merge, props: Omit<P, keyof Style.Props> } => {
@@ -58,6 +59,8 @@ const parser = <P extends Style.Props>( {
     if ( !style.alignItems ) style.alignItems = 'center'
     if ( !style.justifyContent ) style.justifyContent = 'center'
   }
+
+  if ( full ) Object.assign( style, StyleSheet.absoluteFillObject )
 
   let positions: Style.Space | null = null
 

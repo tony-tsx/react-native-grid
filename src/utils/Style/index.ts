@@ -84,6 +84,7 @@ namespace Style {
     overflow?: boolean | 'visible' | 'hidden' | 'scroll'
     index?: number
 
+    full?: boolean
   }
 }
 
