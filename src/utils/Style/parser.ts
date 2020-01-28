@@ -59,8 +59,48 @@ const parser = <P extends Style.Props>( {
     if ( !style.justifyContent ) style.justifyContent = 'center'
   }
 
-  if ( relative ) style.position = 'relative'
-  else if ( absolute ) style.position = 'absolute'
+  let positions: Style.Space | null = null
+
+  if ( relative ) {
+    style.position = 'relative'
+    if ( typeof relative !== 'boolean' ) positions = relative
+  } else if ( absolute ) {
+    style.position = 'absolute'
+    if ( typeof absolute !== 'boolean' ) positions = absolute
+  }
+
+  if ( positions || positions === 0 )
+    if ( typeof positions === 'number' ) {
+
+      style.top = positions
+      style.left = positions
+      style.bottom = positions
+      style.right = positions
+
+    } else if ( Array.isArray( positions ) )
+
+      if ( positions.length === 2 ) {
+
+        style.top = positions[0]
+        style.left = positions[1]
+        style.bottom = positions[0]
+        style.right = positions[1]
+
+      } else if ( positions.length === 3 ) {
+
+        style.top = positions[0]
+        style.left = positions[1]
+        style.bottom = positions[2]
+        style.right = positions[1]
+
+      } else {
+
+        style.top = positions[0]
+        style.left = positions[1]
+        style.bottom = positions[2]
+        style.right = positions[3]
+
+      }
 
   if ( radius || radius === 0 )
     if ( Array.isArray( radius ) )

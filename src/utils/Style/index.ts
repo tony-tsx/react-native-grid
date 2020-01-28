@@ -17,8 +17,8 @@ namespace Style {
   }
 
   export interface Positions {
-    absolute?: boolean
-    relative?: boolean
+    absolute?: boolean | Space
+    relative?: boolean | Space
   }
   /**
    * The resolution value has 3 forms:
