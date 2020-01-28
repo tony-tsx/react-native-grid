@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, style: propStyle, ...props }) => {
+const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, full, style: propStyle, ...props }) => {
     const style = {};
     if (align)
         switch (align) {
@@ -34,6 +34,8 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
         if (!style.justifyContent)
             style.justifyContent = 'center';
     }
+    if (full)
+        Object.assign(style, StyleSheet.absoluteFillObject);
     let positions = null;
     if (relative) {
         style.position = 'relative';
