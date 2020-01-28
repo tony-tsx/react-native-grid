@@ -1,12 +1,13 @@
-import GridCol from './components/Col';
-import GridRow from './components/Row';
-import GridBlock from './components/Block';
-import GridTouch from './components/Touch';
-import GridText from './components/Text';
-import GridCircle from './components/Circle';
 import GridAnimation from './components/Animation';
-import GridStyle from './utils/Style';
+import GridBlock from './components/Block';
+import GridCircle from './components/Circle';
+import GridCol from './components/Col';
+import GridGradient from './components/Gradient';
+import GridRow from './components/Row';
 import GridScroll from './components/Scroll';
+import GridText from './components/Text';
+import GridTouch from './components/Touch';
+import GridStyle from './utils/Style';
 var Grid;
 (function (Grid) {
     Grid.Col = GridCol;
@@ -18,6 +19,7 @@ var Grid;
     Grid.Animation = GridAnimation;
     Grid.Style = GridStyle;
     Grid.Scroll = GridScroll;
+    Grid.Gradient = GridGradient;
 })(Grid || (Grid = {}));
 export var Col = Grid.Col;
 export var Row = Grid.Row;

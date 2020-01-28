@@ -123,9 +123,9 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
                 style.minHeight = minHeight ? height * minHeight : undefined;
             }
             else {
-                style.height = (dheight !== null && dheight !== void 0 ? dheight : undefined);
-                style.maxHeight = (maxHeight !== null && maxHeight !== void 0 ? maxHeight : undefined);
-                style.minHeight = (minHeight !== null && minHeight !== void 0 ? minHeight : undefined);
+                style.height = dheight ?? undefined;
+                style.maxHeight = maxHeight ?? undefined;
+                style.minHeight = minHeight ?? undefined;
             }
         }
         else if (typeof h === 'number')
@@ -144,9 +144,9 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
                 style.minWidth = minWidth ? width * minWidth : style.minWidth;
             }
             else {
-                style.width = (dwidth !== null && dwidth !== void 0 ? dwidth : style.width);
-                style.maxWidth = (maxWidth !== null && maxWidth !== void 0 ? maxWidth : style.maxWidth);
-                style.minWidth = (minWidth !== null && minWidth !== void 0 ? minWidth : style.minWidth);
+                style.width = dwidth ?? style.width;
+                style.maxWidth = maxWidth ?? style.maxWidth;
+                style.minWidth = minWidth ?? style.minWidth;
             }
         }
         else if (typeof w === 'number')
