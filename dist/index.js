@@ -30,4 +30,5 @@ export var Circle = Grid.Circle;
 export var Animation = Grid.Animation;
 export var Style = Grid.Style;
 export var Scroll = Grid.Scroll;
+export var Gradient = Grid.Gradient;
 export default Grid;

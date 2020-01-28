@@ -32,5 +32,6 @@ export import Circle = Grid.Circle
 export import Animation = Grid.Animation
 export import Style = Grid.Style
 export import Scroll = Grid.Scroll
+export import Gradient = Grid.Gradient
 
 export default Grid
