@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, ViewProps } from 'react-native'
 import Style from '../utils/Style'
 import Event from '../utils/Event'
