@@ -10,11 +10,7 @@ class Block extends React.Component {
             const { style, props } = Style.parser(rest);
             if (on)
                 Object.assign(props, Event.parsers.view(on).events);
-            return {
-                style,
-                props,
-                children
-            };
+            return { style, props, children };
         };
         this.render = () => {
             const { props, style, children } = this.parser();
