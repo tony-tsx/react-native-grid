@@ -5,18 +5,13 @@ import Event from '../utils/Event'
 
 class Block extends React.Component<Block.Props> {
   private parser = () => {
-    const { children, ...rest } = this.props
+    const { children, on, ...rest } = this.props
 
     const { style, props } = Style.parser( rest )
 
-    if ( props.on ) Object.assign( props, Event.parsers.view( props.on ).events )
-    delete props.on
+    if ( on ) Object.assign( props, Event.parsers.view( on ).events )
 
-    return {
-      style,
-      props,
-      children
-    }
+    return { style, props, children }
   }
   public render = () => {
     const { props, style, children } = this.parser()
