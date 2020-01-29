@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { LinearGradient, LinearGradientProps } from 'react-native-linear-gradient'
+import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient'
 import Style from '../utils/Style'
 import Event from '../utils/Event'
 
