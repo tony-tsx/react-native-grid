@@ -32,7 +32,7 @@ const Text = props => {
         return <NativeText {...rest} style={[Text.presets.h5, style, propStyle]}>{children}</NativeText>;
     if (h6)
         return <NativeText {...rest} style={[Text.presets.h6, style, propStyle]}>{children}</NativeText>;
-    return <NativeText {...rest} style={[style, Text.presets.p, propStyle]}>{children}</NativeText>;
+    return <NativeText {...rest} style={[Text.presets.p, style, propStyle]}>{children}</NativeText>;
 };
 Text.presets = {
     h1: { fontSize: 40 },

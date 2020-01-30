@@ -1,12 +1,13 @@
 import React from 'react';
 import { TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import Style from '../utils/Style';
 const Touch = props => {
-    const { highlight, opacity, non, children, ...rest } = props;
+    const { highlight, opacity, children, ...rest } = props;
+    const { style, props: prop } = Style.parser(props);
     switch (true) {
-        case highlight: return <TouchableHighlight {...rest}>{children}</TouchableHighlight>;
-        case opacity: return <TouchableOpacity {...rest}>{children}</TouchableOpacity>;
-        case non:
-        default: return <TouchableWithoutFeedback {...rest}>{children}</TouchableWithoutFeedback>;
+        case highlight: return <TouchableHighlight {...prop} style={style}>{children}</TouchableHighlight>;
+        case opacity: return <TouchableOpacity {...prop} style={style}>{children}</TouchableOpacity>;
+        default: return <TouchableWithoutFeedback {...prop} style={style}>{children}</TouchableWithoutFeedback>;
     }
 };
 export default Touch;

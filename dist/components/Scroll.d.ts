@@ -7,9 +7,6 @@ interface Props extends Style.Props, Event.On<Event.Scroll> {
     horizontal?: boolean;
     style?: ViewStyle;
 }
-declare class Scroll extends React.Component<Props> {
-    static defaultProps: Partial<Props>;
-    render: () => JSX.Element;
-}
+declare const Scroll: React.StatelessComponent<Props>;
 declare namespace Scroll { }
 export default Scroll;

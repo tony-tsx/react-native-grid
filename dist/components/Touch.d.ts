@@ -1,23 +1,21 @@
 import React from 'react';
 import { TouchableWithoutFeedbackProps, TouchableHighlightProps, TouchableOpacityProps } from 'react-native';
+import Style from '../utils/Style';
 declare const Touch: React.StatelessComponent<Touch.Props>;
 declare namespace Touch {
     interface Highlight {
         highlight?: true;
-        opacity?: boolean;
-        non?: boolean;
+        opacity?: false;
     }
     interface Opacity {
         opacity?: true;
-        non?: boolean;
-        highlight?: boolean;
+        highlight?: false;
     }
     interface Non {
-        non?: true;
-        highlight?: boolean;
-        opacity?: boolean;
+        highlight?: false;
+        opacity?: false;
     }
-    type Props = (Highlight & TouchableHighlightProps) | (Opacity & TouchableOpacityProps) | (Non & TouchableWithoutFeedbackProps);
+    type Props = ((Highlight & TouchableHighlightProps) | (Opacity & TouchableOpacityProps) | (Non & TouchableWithoutFeedbackProps)) & Style.Props;
 }
 export declare type TouchProps = Touch.Props;
 export default Touch;

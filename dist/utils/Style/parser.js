@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, full, style: propStyle, ...props }) => {
+const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, full, style: propStyle, col, circle, size, ...props }) => {
     const style = {};
     if (align)
         switch (align) {
@@ -107,9 +107,11 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
     }
     if (row)
         style.flexDirection = 'row';
+    if (col)
+        style.flexDirection = 'column';
     if (reverse)
-        if (style.flexDirection === 'row')
-            style.flexDirection = 'row-reverse';
+        if (style.flexDirection)
+            style.flexDirection = `${style.flexDirection}-reverse`;
         else
             style.flexDirection = 'column-reverse';
     if (flex)
@@ -201,6 +203,23 @@ const parser = ({ align, center, justify, absolute, relative, radius, bg, shadow
         style.overflow = typeof overflow === 'string' ? overflow : 'hidden';
     if (index)
         style.zIndex = index;
+    if (circle) {
+        if (size)
+            if (percent) {
+                style.width = width * size;
+                style.height = width * size;
+            }
+            else {
+                style.width = size;
+                style.height = size;
+            }
+        if (typeof style.width === 'number')
+            style.borderRadius = style.width / 2;
+        else if (propStyle?.width && typeof propStyle.width === 'number')
+            style.borderRadius = propStyle.width / 2;
+        else
+            style.borderRadius = width;
+    }
     return { style: StyleSheet.flatten([style, propStyle]), props };
 };
 export default parser;
