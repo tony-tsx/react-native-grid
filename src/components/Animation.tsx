@@ -1,36 +1,31 @@
-import React, { Component, PureComponent, ComponentType, WeakValidationMap } from 'react'
+import React, { ComponentType } from 'react'
 import { Animated, ViewStyle } from 'react-native'
-import Types from 'prop-types'
 
-type P<C> =
-C extends new ( ...args: any ) => Component< infer P > ? P :
-C extends new ( ...args: any ) => PureComponent< infer P > ? P :
-never
-
-type Props<C> = { component: any, style?: {
-  [K in keyof ViewStyle]: ViewStyle[K] | InstanceType<typeof Animated.Value>
-} } & ( P<C> extends never ? { [key: string]: any } : P<C> )
+interface Props {
+  component: ComponentType
+  style?: { [K in keyof ViewStyle]: ViewStyle[K] | InstanceType<typeof Animated.Value> }
+  [key: string]: any
+}
 
 const storage: any = {}
 
-class Animation<C> extends Component<Props<C>> {
-  public static propTypes: WeakValidationMap<Props<any>> = {
-    component: Types.elementType.isRequired
-  }
-  private Component: ComponentType<Props<C>>
-  constructor( props: Props<C> ) {
-    super( props )
-    if ( !props.component ) throw new Error( 'component as required' )
-    if ( !( '__animation__' in props.component && typeof props.component.__animation__ === 'symbol' ) ) {
-      props.component.__animation__ = Symbol( `${props.component.name}__animation__` )
-      storage[props.component.__animation__] = Animated.createAnimatedComponent( props.component )
-    }
-    this.Component = storage[props.component.__animation__]
-  }
-  public render = () => {
-    const { children, component, ...rest } = this.props
-    return <this.Component {...rest as any}>{children}</this.Component>
-  }
+const register = ( component: any ) => {
+  component.__animation__ = Symbol( `${component.name}--animation--` )
+  storage[component.__animation__] = Animated.createAnimatedComponent( component )
+}
+
+const retriver = ( component: any ): ComponentType => storage[component.__animation__] || null
+
+const check = ( component: any ) => '__animation__' in component && typeof component.__animation__ === 'symbol'
+
+const norm = ( component: any ) => {
+  if ( !check( component ) ) register( component )
+  return retriver( component )
+}
+
+const Animation: React.StatelessComponent<Props> = ( { component, children, style, ...rest } ) => {
+  const Component = norm( component )
+  return <Component {...rest}>{children}</Component>
 }
 
 namespace Animation {}
