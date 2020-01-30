@@ -4,7 +4,7 @@ import GridGradient from './components/Gradient'
 import GridScroll from './components/Scroll'
 import GridText from './components/Text'
 import GridTouch from './components/Touch'
-
+import GridGrid from './components/Grid'
 import GridStyle from './utils/Style'
 
 namespace Grid {
@@ -15,6 +15,7 @@ namespace Grid {
   export import Style = GridStyle
   export import Scroll = GridScroll
   export import Gradient = GridGradient
+  export import Grid = GridGrid
 }
 
 export import Block = Grid.Block
@@ -24,5 +25,6 @@ export import Animation = Grid.Animation
 export import Style = Grid.Style
 export import Scroll = Grid.Scroll
 export import Gradient = Grid.Gradient
+export import Grid = Grid.Grid
 
 export default Grid
