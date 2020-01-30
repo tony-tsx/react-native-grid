@@ -7,27 +7,30 @@ import {
   TouchableHighlightProps,
   TouchableOpacityProps
 } from 'react-native'
+import Style from '../utils/Style'
 
 const Touch: React.StatelessComponent<Touch.Props> = props => {
-  const { highlight, opacity, non, children, ...rest } = props
+  const { highlight, opacity, children, ...rest } = props
+
+  const { style, props: prop } = Style.parser( props )
 
   switch ( true ) {
-    case highlight: return <TouchableHighlight { ...rest } >{children}</TouchableHighlight>
-    case opacity: return <TouchableOpacity { ...rest } >{children}</TouchableOpacity>
-    case non:
-    default: return <TouchableWithoutFeedback { ...rest }>{children}</TouchableWithoutFeedback>
+    case highlight: return <TouchableHighlight { ...prop } style={ style }>{children}</TouchableHighlight>
+    case opacity: return <TouchableOpacity { ...prop } style={ style }>{children}</TouchableOpacity>
+    default: return <TouchableWithoutFeedback { ...prop } style={ style }>{children}</TouchableWithoutFeedback>
   }
 }
 
 namespace Touch {
-  export interface Highlight { highlight?: true, opacity?: boolean, non?: boolean }
-  export interface Opacity { opacity?: true, non?: boolean, highlight?: boolean }
-  export interface Non { non?: true, highlight?: boolean, opacity?: boolean }
+  export interface Highlight { highlight?: true, opacity?: false }
+  export interface Opacity { opacity?: true, highlight?: false }
+  export interface Non { highlight?: false, opacity?: false }
 
-  export type Props =
+  export type Props = (
     | ( Highlight & TouchableHighlightProps )
     | ( Opacity & TouchableOpacityProps )
     | ( Non & TouchableWithoutFeedbackProps )
+  ) & Style.Props
 }
 
 export type TouchProps = Touch.Props
