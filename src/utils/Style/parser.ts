@@ -24,6 +24,8 @@ const parser = <P extends Style.Props>( {
   full,
   style: propStyle,
   col,
+  circle,
+  size,
   ...props
 }: P ): { style: Style.Styles.Merge, props: Omit<P, keyof Style.Props> } => {
   const style: Style.Styles.Merge = {}
@@ -267,6 +269,27 @@ const parser = <P extends Style.Props>( {
   if ( overflow ) style.overflow = typeof overflow === 'string' ? overflow : 'hidden'
 
   if ( index ) style.zIndex = index
+
+  if ( circle ) {
+
+    if ( size )
+
+      if ( percent ) {
+
+        style.width = width * size
+        style.height = width * size
+
+      } else {
+
+        style.width = size
+        style.height = size
+
+      }
+
+    if ( typeof style.width === 'number' ) style.borderRadius = style.width / 2
+    else if ( propStyle?.width && typeof propStyle.width === 'number' ) style.borderRadius = propStyle.width / 2
+    else style.borderRadius = width
+  }
 
   return { style: StyleSheet.flatten( [ style, propStyle ] ) as Style.Styles.Merge, props }
 }

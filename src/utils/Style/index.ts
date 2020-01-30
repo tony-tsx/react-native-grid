@@ -88,6 +88,10 @@ namespace Style {
     overflow?: boolean | 'visible' | 'hidden' | 'scroll'
     index?: number
 
+    circle?: boolean
+
+    size?: number
+
     full?: boolean
   }
 }
