@@ -69,12 +69,16 @@ namespace Style {
     p?: Space
   }
 
-  export interface Props extends Centralization, Positions, Resolutions, Spaces {
+  export interface Direction {
+    row?: boolean
+    col?: boolean
+    reverse?: boolean
+  }
+
+  export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction {
     style?: Styles.Merge | Styles.Change
     radius?: number | Space
     shadow?: boolean | number
-    row?: boolean
-    reverse?: boolean
 
     bg?: string
 

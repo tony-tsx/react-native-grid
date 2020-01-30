@@ -23,6 +23,7 @@ const parser = <P extends Style.Props>( {
   index,
   full,
   style: propStyle,
+  col,
   ...props
 }: P ): { style: Style.Styles.Merge, props: Omit<P, keyof Style.Props> } => {
   const style: Style.Styles.Merge = {}
@@ -144,9 +145,10 @@ const parser = <P extends Style.Props>( {
   }
 
   if ( row ) style.flexDirection = 'row'
+  if ( col ) style.flexDirection = 'column'
 
   if ( reverse )
-    if ( style.flexDirection === 'row' ) style.flexDirection = 'row-reverse'
+    if ( style.flexDirection ) style.flexDirection = `${style.flexDirection}-reverse` as 'row-reverse' | 'column-reverse'
     else style.flexDirection = 'column-reverse'
 
   if ( flex ) style.flex = typeof flex === 'number' ? flex : 1
