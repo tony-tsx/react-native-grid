@@ -1,8 +1,7 @@
 import React from 'react'
-import { Row } from '..'
 import { create } from 'react-test-renderer'
-
+import { Block } from '../src'
 test( 'Component Row', () => {
-  const component = create( <Row /> )
+  const component = create( <Block flex row/> )
   console.log( component.toJSON() )
 } )
