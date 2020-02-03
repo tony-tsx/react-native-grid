@@ -64,7 +64,7 @@ namespace Style {
     export interface Props extends Centralization, Positions, Spaces, Direction, Flex {
       h?: Resolution
       w?: Resolution
-      style?: Styles.Merge | Styles.Change
+      style?: Styles.Merge | Styles.Change | Style
       radius?: number | Space
       shadow?: boolean | number // | Animated.Value
 
