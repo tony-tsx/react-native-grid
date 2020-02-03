@@ -1,31 +1,33 @@
 import React, { ComponentType } from 'react'
-import { Animated, ViewStyle } from 'react-native'
+import { Animated } from 'react-native'
+import Style from '../utils/Style'
 
-interface Props {
-  component: ComponentType
-  style?: { [K in keyof ViewStyle]: ViewStyle[K] | InstanceType<typeof Animated.Value> }
+type RequestComponentType = ComponentType< { [key: string]: any} >
+
+const animation = Symbol( 'animation-component' )
+
+interface Props extends Omit<Style.Animation.Props, 'style'> {
+  component: RequestComponentType
+  style?: Style.Animation.Style
   [key: string]: any
 }
 
-const storage: any = {}
+const register = ( component: any ): RequestComponentType =>
+  component[animation] = Animated.createAnimatedComponent( component )
 
-const register = ( component: any ) => {
-  component.__animation__ = Symbol( `${component.name}--animation--` )
-  storage[component.__animation__] = Animated.createAnimatedComponent( component )
-}
+const retriver = ( component: any ): RequestComponentType => component[animation] || null
 
-const retriver = ( component: any ): ComponentType => storage[component.__animation__] || null
-
-const check = ( component: any ) => '__animation__' in component && typeof component.__animation__ === 'symbol'
+const check = ( component: any ) => !!component[animation]
 
 const norm = ( component: any ) => {
-  if ( !check( component ) ) register( component )
+  if ( !check( component ) ) return register( component )
   return retriver( component )
 }
 
-const Animation: React.StatelessComponent<Props> = ( { component, children, style, ...rest } ) => {
+const Animation: React.StatelessComponent<Props> = ( { component, ...rest } ) => {
   const Component = norm( component )
-  return <Component {...rest}>{children}</Component>
+  const { style, props } = Style.parser( rest )
+  return <Component {...props} style={ style }/>
 }
 
 namespace Animation {}
