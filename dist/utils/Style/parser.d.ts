@@ -1,6 +1,7 @@
 import Style from '.';
-declare const parser: <P extends Style.Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, full, style: propStyle, col, circle, size, ...props }: P) => {
-    style: Style.Styles.Merge;
-    props: Pick<P, Exclude<keyof P, "center" | "reverse" | "size" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "circle" | "col" | "p" | "overflow" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "index" | "full">>;
-};
+export interface Return<P extends Style.Props | Style.Animation.Props> {
+    style: P extends Style.Props ? Style.Styles.Merge : Style.Animation.Style;
+    props: Omit<P, keyof Style.Props>;
+}
+declare const parser: <P extends Style.Props | Style.Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, style: propStyle, ...props }: P) => Return<P>;
 export default parser;

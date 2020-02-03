@@ -1,11 +1,44 @@
-import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { ViewStyle, TextStyle, ImageStyle, Animated } from 'react-native';
+declare type DeepMerge<A, B> = {
+    [K in keyof A]: K extends keyof B ? B[K] extends object ? A[K] extends object ? DeepMerge<A[K], B[K]> : B[K] | A[K] : B[K] | A[K] : A[K];
+} & {
+    [K in keyof B]: K extends keyof A ? B[K] extends object ? A[K] extends object ? DeepMerge<A[K], B[K]> : B[K] | A[K] : B[K] | A[K] : B[K];
+};
 declare namespace Style {
-    export const parser: <P extends Props>({ align, center, justify, absolute, relative, radius, bg, shadow, row, reverse, flex, percent, h, m, p, w, overflow, index, full, style: propStyle, col, circle, size, ...props }: P) => {
-        style: Styles.Merge;
-        props: Pick<P, Exclude<keyof P, "center" | "reverse" | "size" | "style" | "flex" | "row" | "absolute" | "relative" | "justify" | "circle" | "col" | "p" | "overflow" | "align" | "radius" | "bg" | "shadow" | "percent" | "h" | "m" | "w" | "index" | "full">>;
-    };
+    export const parser: <P extends Props | Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, style: propStyle, ...props }: P) => import("./parser").Return<P>;
+    export namespace Animation {
+        type Style = {
+            [K in keyof Styles.Merge]: Styles.Merge[K] extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : Styles.Merge[K] extends (infer U)[] ? U extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : U : Styles.Merge[K] extends object ? {
+                [K2 in keyof Styles.Merge[K]]: Styles.Merge[K][K2] extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : Styles.Merge[K][K2];
+            } : Styles.Merge[K];
+        };
+        type Resolution = boolean | number | Animated.Value | [(number | Animated.Value)?, (number | Animated.Value)?, (number | Animated.Value)?];
+        type Space = number | Animated.Value | [(number | Animated.Value)?, (number | Animated.Value)?] | [(number | Animated.Value)?, (number | Animated.Value)?, (number | Animated.Value)?] | [(number | Animated.Value)?, (number | Animated.Value)?, (number | Animated.Value)?, (number | Animated.Value)?];
+        interface Flex {
+            flex?: boolean | number | Animated.Value;
+        }
+        interface Direction {
+            row?: boolean | number | Animated.Value;
+            col?: boolean | number | Animated.Value;
+            reverse?: boolean;
+        }
+        interface Props extends Centralization, Positions, Spaces, Direction, Flex {
+            h?: Resolution;
+            w?: Resolution;
+            style?: Styles.Merge | Styles.Change | Style;
+            radius?: number | Space;
+            shadow?: boolean | number;
+            bg?: string;
+            percent?: boolean;
+            overflow?: boolean | 'visible' | 'hidden' | 'scroll';
+            index?: number | Animated.Value;
+            circle?: boolean;
+            size?: number | Animated.Value;
+            full?: boolean;
+        }
+    }
     export namespace Styles {
-        type Merge = ViewStyle & TextStyle & ImageStyle;
+        type Merge = DeepMerge<ViewStyle, DeepMerge<TextStyle, ImageStyle>>;
         type Change = ViewStyle | TextStyle | ImageStyle;
     }
     export interface Centralization {
@@ -55,17 +88,19 @@ declare namespace Style {
          */
         p?: Space;
     }
+    export interface Flex {
+        flex?: boolean | number;
+    }
     export interface Direction {
-        row?: boolean;
-        col?: boolean;
+        row?: boolean | number;
+        col?: boolean | number;
         reverse?: boolean;
     }
-    export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction {
+    export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction, Flex {
         style?: Styles.Merge | Styles.Change;
         radius?: number | Space;
         shadow?: boolean | number;
         bg?: string;
-        flex?: boolean | number;
         percent?: boolean;
         overflow?: boolean | 'visible' | 'hidden' | 'scroll';
         index?: number;

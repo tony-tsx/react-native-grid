@@ -1,10 +1,11 @@
 import React, { ComponentType } from 'react';
-import { Animated, ViewStyle } from 'react-native';
-interface Props {
-    component: ComponentType;
-    style?: {
-        [K in keyof ViewStyle]: ViewStyle[K] | InstanceType<typeof Animated.Value>;
-    };
+import Style from '../utils/Style';
+declare type RequestComponentType = ComponentType<{
+    [key: string]: any;
+}>;
+interface Props extends Omit<Style.Animation.Props, 'style'> {
+    component: RequestComponentType;
+    style?: Style.Animation.Style;
     [key: string]: any;
 }
 declare const Animation: React.StatelessComponent<Props>;

@@ -1,19 +1,18 @@
 import React from 'react';
 import { Animated } from 'react-native';
-const storage = {};
-const register = (component) => {
-    component.__animation__ = Symbol(`${component.name}--animation--`);
-    storage[component.__animation__] = Animated.createAnimatedComponent(component);
-};
-const retriver = (component) => storage[component.__animation__] || null;
-const check = (component) => '__animation__' in component && typeof component.__animation__ === 'symbol';
+import Style from '../utils/Style';
+const animation = Symbol('animation-component');
+const register = (component) => component[animation] = Animated.createAnimatedComponent(component);
+const retriver = (component) => component[animation] || null;
+const check = (component) => !!component[animation];
 const norm = (component) => {
     if (!check(component))
-        register(component);
+        return register(component);
     return retriver(component);
 };
-const Animation = ({ component, children, style, ...rest }) => {
+const Animation = ({ component, ...rest }) => {
     const Component = norm(component);
-    return <Component {...rest}>{children}</Component>;
+    const { style, props } = Style.parser(rest);
+    return <Component {...props} style={style}/>;
 };
 export default Animation;
