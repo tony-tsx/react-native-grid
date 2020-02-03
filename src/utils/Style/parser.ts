@@ -1,34 +1,39 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Animated } from 'react-native'
 import Style from '.'
 const { width, height } = Dimensions.get( 'screen' )
 
-const parser = <P extends Style.Props>( {
-  align,
-  center,
-  justify,
-  absolute,
-  relative,
+export interface Return<P extends Style.Props | Style.Animation.Props> {
+  style: P extends Style.Props ? Style.Styles.Merge : Style.Animation.Style,
+  props: Omit<P, keyof Style.Props>
+}
+
+const parser = <P extends Style.Props | Style.Animation.Props>( {
+  // Centralização
+  align, justify, center,
+  // Posicionamento
+  absolute, relative,
+  // Borda
   radius,
+  // Backgorund
   bg,
+  // Sombra
   shadow,
-  row,
-  reverse,
-  flex,
-  percent,
-  h,
-  m,
-  p,
-  w,
-  overflow,
-  index,
-  full,
+  // Direção e flex
+  flex, col, row, reverse,
+  // Altura e largura
+  h, w,
+  // espaçamento interno e externo
+  m, p,
+
+  // Opcionais
+  percent, overflow, index, full,
+
+  // Circulo
+  circle, size,
   style: propStyle,
-  col,
-  circle,
-  size,
   ...props
-}: P ): { style: Style.Styles.Merge, props: Omit<P, keyof Style.Props> } => {
-  const style: Style.Styles.Merge = {}
+}: P ): Return<P> => {
+  const style: Style.Styles.Merge | Style.Animation.Style = {}
 
   if ( align )
     switch ( align ) {
@@ -138,7 +143,7 @@ const parser = <P extends Style.Props>( {
   if ( bg ) style.backgroundColor = bg
 
   if ( shadow ) {
-    const num = typeof shadow === 'number' ? shadow : 5
+    const num = typeof shadow === 'boolean' ? 5 : shadow
     style.elevation = num
     style.shadowColor = 'black'
     style.shadowOffset = { width: 0, height: num * .5 }
@@ -146,14 +151,21 @@ const parser = <P extends Style.Props>( {
     style.shadowRadius = .8 * num
   }
 
-  if ( row ) style.flexDirection = 'row'
-  if ( col ) style.flexDirection = 'column'
-
   if ( reverse )
     if ( style.flexDirection ) style.flexDirection = `${style.flexDirection}-reverse` as 'row-reverse' | 'column-reverse'
     else style.flexDirection = 'column-reverse'
 
   if ( flex ) style.flex = typeof flex === 'number' ? flex : 1
+
+  if ( row || row === 0 ) {
+    style.flexDirection = 'row'
+    if ( typeof row === 'number' ) style.flex = row
+  }
+
+  if ( col || col === 0 ) {
+    style.flexDirection = 'column'
+    if ( typeof col === 'number' ) style.flex = col
+  }
 
   if ( h )
 
@@ -163,15 +175,23 @@ const parser = <P extends Style.Props>( {
 
       if ( percent ) {
 
-        style.height = dheight ? height * dheight : undefined
-        style.maxHeight = maxHeight ? height * maxHeight : undefined
-        style.minHeight = minHeight ? height * minHeight : undefined
+        if ( dheight )
+          if ( typeof dheight === 'number' ) style.height = height * dheight
+          else style.height = Animated.multiply( height, dheight )
+
+        if ( maxHeight )
+          if ( typeof maxHeight === 'number' ) style.height = height * maxHeight
+          else style.maxHeight = Animated.multiply( height, maxHeight )
+
+        if ( minHeight )
+          if ( typeof minHeight === 'number' ) style.height = height * minHeight
+          else style.minHeight = Animated.multiply( height, minHeight )
 
       } else {
 
-        style.height = dheight ?? undefined
-        style.maxHeight = maxHeight ?? undefined
-        style.minHeight = minHeight ?? undefined
+        style.height = dheight
+        style.maxHeight = maxHeight
+        style.minHeight = minHeight
 
       }
 
@@ -191,9 +211,17 @@ const parser = <P extends Style.Props>( {
 
       if ( percent ) {
 
-        style.width = dwidth ? width * dwidth : style.width
-        style.maxWidth = maxWidth ? width * maxWidth : style.maxWidth
-        style.minWidth = minWidth ? width * minWidth : style.minWidth
+        if ( dwidth )
+          if ( typeof dwidth === 'number' ) style.width = width * dwidth
+          else style.width = Animated.multiply( width, dwidth )
+
+        if ( maxWidth )
+          if ( typeof maxWidth === 'number' ) style.maxWidth = width * maxWidth
+          else style.maxWidth = Animated.multiply( width, maxWidth )
+
+        if ( minWidth )
+          if ( typeof minWidth === 'number' ) style.width = width * minWidth
+          else style.minWidth = Animated.multiply( width, minWidth )
 
       } else {
 
@@ -215,7 +243,7 @@ const parser = <P extends Style.Props>( {
 
     if ( Array.isArray( m ) )
 
-      if ( m.length === 2 ) {
+      if ( m.length <= 2 ) {
 
         style.marginVertical = m[0]
         style.marginHorizontal = m[1]
@@ -265,7 +293,6 @@ const parser = <P extends Style.Props>( {
 
     else style.padding = p
 
-  // @ts-ignore
   if ( overflow ) style.overflow = typeof overflow === 'string' ? overflow : 'hidden'
 
   if ( index ) style.zIndex = index
@@ -274,24 +301,22 @@ const parser = <P extends Style.Props>( {
 
     if ( size )
 
-      if ( percent ) {
+      if ( percent )
 
-        style.width = width * size
-        style.height = width * size
+        if ( typeof size === 'number' ) style.width = style.height = width * size
 
-      } else {
+        else style.width = style.height = Animated.multiply( width, size )
 
-        style.width = size
-        style.height = size
-
-      }
+      else style.width = style.height = size
 
     if ( typeof style.width === 'number' ) style.borderRadius = style.width / 2
+
     else if ( propStyle?.width && typeof propStyle.width === 'number' ) style.borderRadius = propStyle.width / 2
+
     else style.borderRadius = width
   }
 
-  return { style: StyleSheet.flatten( [ style, propStyle ] ) as Style.Styles.Merge, props }
+  return { style: StyleSheet.flatten( [ style, propStyle ] ) as any, props }
 }
 
 export default parser

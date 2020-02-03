@@ -1,12 +1,89 @@
-import { ViewStyle, TextStyle, ImageStyle } from 'react-native'
+import { ViewStyle, TextStyle, ImageStyle, Animated } from 'react-native'
 import styledParser from './parser'
+
+type DeepMerge<A, B> = {
+  [K in keyof A]: K extends keyof B ?
+    B[K] extends object ?
+      A[K] extends object ? DeepMerge<A[K], B[K]>
+      : B[K] | A[K]
+    : B[K] | A[K]
+  : A[K]
+} & {
+  [K in keyof B]: K extends keyof A ?
+    B[K] extends object ?
+      A[K] extends object ? DeepMerge<A[K], B[K]>
+      : B[K] | A[K]
+    : B[K] | A[K]
+  : B[K]
+}
 
 namespace Style {
 
   export const parser = styledParser
 
+  export namespace Animation {
+    export type Style = {
+      [K in keyof Styles.Merge]:
+        Styles.Merge[K] extends string | number | undefined ?
+          Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation :
+        Styles.Merge[K] extends ( infer U )[] ?
+          U extends string | number | undefined ?
+            Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : U :
+        Styles.Merge[K] extends object ? {
+          [K2 in keyof Styles.Merge[K]]:
+          Styles.Merge[K][K2] extends string | number | undefined ?
+            Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : Styles.Merge[K][K2]
+        } : Styles.Merge[K]
+    }
+    export type Resolution =
+      | boolean
+      | number | Animated.Value
+      | [ ( number | Animated.Value )?, ( number | Animated.Value )?, ( number | Animated.Value )? ]
+
+    export type Space =
+      | number | Animated.Value
+      | [ ( number | Animated.Value )?, ( number | Animated.Value )? ]
+      | [ ( number | Animated.Value )?, ( number | Animated.Value )?, ( number | Animated.Value )? ]
+      | [
+          ( number | Animated.Value )?,
+          ( number | Animated.Value )?,
+          ( number | Animated.Value )?,
+          ( number | Animated.Value )?
+        ]
+
+    export interface Flex {
+      flex?: boolean | number | Animated.Value
+    }
+
+    export interface Direction {
+      row?: boolean | number | Animated.Value
+      col?: boolean | number | Animated.Value
+      reverse?: boolean
+    }
+
+    export interface Props extends Centralization, Positions, Spaces, Direction, Flex {
+      h?: Resolution
+      w?: Resolution
+      style?: Styles.Merge | Styles.Change
+      radius?: number | Space
+      shadow?: boolean | number // | Animated.Value
+
+      bg?: string
+
+      percent?: boolean
+      overflow?: boolean | 'visible' | 'hidden' | 'scroll'
+      index?: number | Animated.Value
+
+      circle?: boolean
+
+      size?: number | Animated.Value
+
+      full?: boolean
+    }
+  }
+
   export namespace Styles {
-    export type Merge = ViewStyle & TextStyle & ImageStyle
+    export type Merge = DeepMerge<ViewStyle, DeepMerge<TextStyle, ImageStyle>>
     export type Change = ViewStyle | TextStyle | ImageStyle
   }
 
@@ -69,20 +146,22 @@ namespace Style {
     p?: Space
   }
 
+  export interface Flex {
+    flex?: boolean | number
+  }
+
   export interface Direction {
-    row?: boolean
-    col?: boolean
+    row?: boolean | number
+    col?: boolean | number
     reverse?: boolean
   }
 
-  export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction {
+  export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction, Flex {
     style?: Styles.Merge | Styles.Change
     radius?: number | Space
     shadow?: boolean | number
 
     bg?: string
-
-    flex?: boolean | number
 
     percent?: boolean
     overflow?: boolean | 'visible' | 'hidden' | 'scroll'
