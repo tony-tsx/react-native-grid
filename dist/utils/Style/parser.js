@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions, Animated } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-const parser = ({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, border, style: propStyle, ...props }) => {
+const parser = ({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, b, style: propStyle, ...props }) => {
     const style = {};
     if (align)
         switch (align) {
@@ -252,121 +252,88 @@ const parser = ({ align, justify, center, absolute, relative, radius, bg, shadow
         else
             style.borderRadius = width;
     }
-    if (border)
-        if (Array.isArray(border))
-            if (border.length <= 2) {
-                if (Array.isArray(border[0])) {
-                    if (border[0][0])
-                        style.borderTopWidth = style.borderBottomWidth = border[0][0];
-                    if (border[0][1])
-                        style.borderTopStartRadius =
-                            style.borderTopEndRadius =
-                                style.borderBottomStartRadius =
-                                    style.borderBottomEndRadius = border[0][1];
-                    if (border[0][2])
-                        style.borderTopColor = style.borderBottomColor = border[0][2];
+    if (b)
+        if (Array.isArray(b))
+            if (b.length <= 2) {
+                if (Array.isArray(b[0])) {
+                    if (b[0][0])
+                        style.borderTopWidth = style.borderBottomWidth = b[0][0];
+                    if (b[0][1])
+                        style.borderTopColor = style.borderBottomColor = b[0][1];
                 }
                 else
-                    style.borderTopWidth = style.borderBottomWidth = border[0];
-                if (Array.isArray(border[1])) {
-                    if (border[1][0])
-                        style.borderLeftWidth = style.borderRightWidth = border[1][0];
-                    if (border[1][1])
-                        style.borderTopLeftRadius =
-                            style.borderTopRightRadius =
-                                style.borderBottomLeftRadius =
-                                    style.borderBottomRightRadius = border[1][1];
-                    if (border[1][2])
-                        style.borderLeftColor = style.borderRightColor = border[1][2];
+                    style.borderTopWidth = style.borderBottomWidth = b[0];
+                if (Array.isArray(b[1])) {
+                    if (b[1][0])
+                        style.borderLeftWidth = style.borderRightWidth = b[1][0];
+                    if (b[1][1])
+                        style.borderLeftColor = style.borderRightColor = b[1][1];
                 }
                 else
-                    style.borderLeftWidth = style.borderRightWidth = border[1];
+                    style.borderLeftWidth = style.borderRightWidth = b[1];
             }
-            else if (border.length === 3) {
-                if (Array.isArray(border[0])) {
-                    if (border[0][0])
-                        style.borderTopWidth = border[0][0];
-                    if (border[0][1])
-                        style.borderTopStartRadius =
-                            style.borderTopEndRadius = border[0][1];
-                    if (border[0][2])
-                        style.borderTopColor = border[0][2];
+            else if (b.length === 3) {
+                if (Array.isArray(b[0])) {
+                    if (b[0][0])
+                        style.borderTopWidth = b[0][0];
+                    if (b[0][1])
+                        style.borderTopColor = b[0][1];
                 }
                 else
-                    style.borderTopWidth = style.borderBottomWidth = border[0];
-                if (Array.isArray(border[1])) {
-                    if (border[1][0])
-                        style.borderLeftWidth = style.borderRightWidth = border[1][0];
-                    if (border[1][1])
-                        style.borderTopLeftRadius =
-                            style.borderTopRightRadius =
-                                style.borderBottomLeftRadius =
-                                    style.borderBottomRightRadius = border[1][1];
-                    if (border[1][2])
-                        style.borderLeftColor = style.borderRightColor = border[1][2];
+                    style.borderTopWidth = style.borderBottomWidth = b[0];
+                if (Array.isArray(b[1])) {
+                    if (b[1][0])
+                        style.borderLeftWidth = style.borderRightWidth = b[1][0];
+                    if (b[1][1])
+                        style.borderLeftColor = style.borderRightColor = b[1][1];
                 }
                 else
-                    style.borderLeftWidth = style.borderRightWidth = border[1];
-                if (Array.isArray(border[2])) {
-                    if (border[2][0])
-                        style.borderBottomWidth = border[2][0];
-                    if (border[2][1])
-                        style.borderBottomStartRadius =
-                            style.borderBottomEndRadius = border[2][1];
-                    if (border[2][2])
-                        style.borderBottomColor = border[2][2];
+                    style.borderLeftWidth = style.borderRightWidth = b[1];
+                if (Array.isArray(b[2])) {
+                    if (b[2][0])
+                        style.borderBottomWidth = b[2][0];
+                    if (b[2][1])
+                        style.borderBottomColor = b[2][1];
                 }
                 else
-                    style.borderBottomWidth = border[2];
+                    style.borderBottomWidth = b[2];
             }
             else {
-                if (Array.isArray(border[0])) {
-                    if (border[0][0])
-                        style.borderTopWidth = border[0][0];
-                    if (border[0][1])
-                        style.borderTopLeftRadius =
-                            style.borderTopStartRadius =
-                                style.borderTopEndRadius = border[0][1];
-                    if (border[0][2])
-                        style.borderTopColor = border[0][2];
+                if (Array.isArray(b[0])) {
+                    if (b[0][0])
+                        style.borderTopWidth = b[0][0];
+                    if (b[0][1])
+                        style.borderTopColor = b[0][1];
                 }
                 else
-                    style.borderTopWidth = style.borderBottomWidth = border[0];
-                if (Array.isArray(border[1])) {
-                    if (border[1][0])
-                        style.borderLeftWidth = border[1][0];
-                    if (border[1][1])
-                        style.borderTopRightRadius = border[1][1];
-                    if (border[1][2])
-                        style.borderLeftColor = border[1][2];
+                    style.borderTopWidth = style.borderBottomWidth = b[0];
+                if (Array.isArray(b[1])) {
+                    if (b[1][0])
+                        style.borderLeftWidth = b[1][0];
+                    if (b[1][1])
+                        style.borderLeftColor = b[1][1];
                 }
                 else
-                    style.borderLeftWidth = border[1];
-                if (Array.isArray(border[2])) {
-                    if (border[2][0])
-                        style.borderBottomWidth = border[2][0];
-                    if (border[2][1])
-                        style.borderBottomRightRadius =
-                            style.borderBottomStartRadius =
-                                style.borderBottomEndRadius = border[2][1];
-                    if (border[2][2])
-                        style.borderBottomColor = border[2][2];
+                    style.borderLeftWidth = b[1];
+                if (Array.isArray(b[2])) {
+                    if (b[2][0])
+                        style.borderBottomWidth = b[2][0];
+                    if (b[2][1])
+                        style.borderBottomColor = b[2][1];
                 }
                 else
-                    style.borderBottomWidth = border[2];
-                if (Array.isArray(border[3])) {
-                    if (border[3][0])
-                        style.borderRightWidth = border[3][0];
-                    if (border[3][1])
-                        style.borderBottomLeftRadius = border[3][1];
-                    if (border[3][2])
-                        style.borderRightColor = border[3][2];
+                    style.borderBottomWidth = b[2];
+                if (Array.isArray(b[3])) {
+                    if (b[3][0])
+                        style.borderRightWidth = b[3][0];
+                    if (b[3][1])
+                        style.borderRightColor = b[3][1];
                 }
                 else
-                    style.borderRightWidth = border[3];
+                    style.borderRightWidth = b[3];
             }
         else
-            style.borderWidth = border;
+            style.borderWidth = b;
     return { style: StyleSheet.flatten([style, propStyle]), props };
 };
 export default parser;

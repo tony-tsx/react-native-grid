@@ -85,11 +85,11 @@ namespace Style {
     }
 
     export interface Border {
-      border?: [
-        ( [ number | Animated.Value, number | Animated.Value, ( string )? ] | number | Animated.Value )?,
-        ( [ number | Animated.Value, number | Animated.Value, ( string )? ] | number | Animated.Value )?,
-        ( [ number | Animated.Value, number | Animated.Value, ( string )? ] | number | Animated.Value )?,
-        ( [ number | Animated.Value, number | Animated.Value, ( string )? ] | number | Animated.Value )?
+      b?: [
+        ( [ number | Animated.Value, ( string )? ] | number | Animated.Value )?,
+        ( [ number | Animated.Value, ( string )? ] | number | Animated.Value )?,
+        ( [ number | Animated.Value, ( string )? ] | number | Animated.Value )?,
+        ( [ number | Animated.Value, ( string )? ] | number | Animated.Value )?
       ] | number | Animated.Value
     }
 
@@ -189,11 +189,11 @@ namespace Style {
   }
 
   export interface Border {
-    border?: [
-      ( [ number, number ] | number )?,
-      ( [ number, number ] | number )?,
-      ( [ number, number ] | number )?,
-      ( [ number, number ] | number )?
+    b?: [
+      ( [ ( number )?, ( string )? ] | number )?,
+      ( [ ( number )?, ( string )? ] | number )?,
+      ( [ ( number )?, ( string )? ] | number )?,
+      ( [ ( number )?, ( string )? ] | number )?,
     ] | number
   }
 

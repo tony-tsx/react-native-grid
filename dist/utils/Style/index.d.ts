@@ -8,7 +8,7 @@ declare type DeepMerge<A, B> = {
 declare type TreeDeepMerge<A, B, C> = DeepMerge<A, DeepMerge<B, C>>;
 declare namespace Style {
     export const create: <P, OC extends boolean = false>(Component: React.ComponentType<P>, useClass?: OC | undefined) => OC extends true ? new (props: P & Props) => React.Component<P & Props, {}, any> : React.StatelessComponent<P & Props>;
-    export const parser: <P extends Props | Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, border, style: propStyle, ...props }: P) => import("./parser").Return<P>;
+    export const parser: <P extends Props | Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, b, style: propStyle, ...props }: P) => import("./parser").Return<P>;
     export namespace Animation {
         type Style = {
             [K in keyof Styles.Merge]: Styles.Merge[K] extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : Styles.Merge[K] extends (infer U)[] ? U extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : U : Styles.Merge[K] extends object ? {
@@ -26,7 +26,7 @@ declare namespace Style {
             reverse?: boolean;
         }
         interface Border {
-            border?: [([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?] | number | Animated.Value;
+            b?: [([number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, (string)?] | number | Animated.Value)?] | number | Animated.Value;
         }
         interface Props extends Centralization, Positions, Spaces, Direction, Flex, Border {
             h?: Resolution;
@@ -103,7 +103,7 @@ declare namespace Style {
         reverse?: boolean;
     }
     export interface Border {
-        border?: [([number, number] | number)?, ([number, number] | number)?, ([number, number] | number)?, ([number, number] | number)?] | number;
+        b?: [([(number)?, (string)?] | number)?, ([(number)?, (string)?] | number)?, ([(number)?, (string)?] | number)?, ([(number)?, (string)?] | number)?] | number;
     }
     export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction, Flex, Border {
         style?: Styles.Merge | Styles.Change;
