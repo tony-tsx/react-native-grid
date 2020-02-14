@@ -1,11 +1,14 @@
+import React from 'react';
 import { ViewStyle, TextStyle, ImageStyle, Animated } from 'react-native';
 declare type DeepMerge<A, B> = {
     [K in keyof A]: K extends keyof B ? B[K] extends object ? A[K] extends object ? DeepMerge<A[K], B[K]> : B[K] | A[K] : B[K] | A[K] : A[K];
 } & {
     [K in keyof B]: K extends keyof A ? B[K] extends object ? A[K] extends object ? DeepMerge<A[K], B[K]> : B[K] | A[K] : B[K] | A[K] : B[K];
 };
+declare type TreeDeepMerge<A, B, C> = DeepMerge<A, DeepMerge<B, C>>;
 declare namespace Style {
-    export const parser: <P extends Props | Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, style: propStyle, ...props }: P) => import("./parser").Return<P>;
+    export const create: <P, OC extends boolean = false>(Component: React.ComponentType<P>, useClass?: OC | undefined) => OC extends true ? new (props: P & Props) => React.Component<P & Props, {}, any> : React.StatelessComponent<P & Props>;
+    export const parser: <P extends Props | Animation.Props>({ align, justify, center, absolute, relative, radius, bg, shadow, flex, col, row, reverse, h, w, m, p, percent, overflow, index, full, circle, size, border, style: propStyle, ...props }: P) => import("./parser").Return<P>;
     export namespace Animation {
         type Style = {
             [K in keyof Styles.Merge]: Styles.Merge[K] extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : Styles.Merge[K] extends (infer U)[] ? U extends string | number | undefined ? Animated.Value | Styles.Merge[K] | Animated.AnimatedInterpolation : U : Styles.Merge[K] extends object ? {
@@ -22,7 +25,10 @@ declare namespace Style {
             col?: boolean | number | Animated.Value;
             reverse?: boolean;
         }
-        interface Props extends Centralization, Positions, Spaces, Direction, Flex {
+        interface Border {
+            border?: [([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?, ([number | Animated.Value, number | Animated.Value, (string)?] | number | Animated.Value)?] | number | Animated.Value;
+        }
+        interface Props extends Centralization, Positions, Spaces, Direction, Flex, Border {
             h?: Resolution;
             w?: Resolution;
             style?: Styles.Merge | Styles.Change | Style;
@@ -38,7 +44,7 @@ declare namespace Style {
         }
     }
     export namespace Styles {
-        type Merge = DeepMerge<ViewStyle, DeepMerge<TextStyle, ImageStyle>>;
+        type Merge = TreeDeepMerge<ViewStyle, TextStyle, ImageStyle>;
         type Change = ViewStyle | TextStyle | ImageStyle;
     }
     export interface Centralization {
@@ -96,7 +102,10 @@ declare namespace Style {
         col?: boolean | number;
         reverse?: boolean;
     }
-    export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction, Flex {
+    export interface Border {
+        border?: [([number, number] | number)?, ([number, number] | number)?, ([number, number] | number)?, ([number, number] | number)?] | number;
+    }
+    export interface Props extends Centralization, Positions, Resolutions, Spaces, Direction, Flex, Border {
         style?: Styles.Merge | Styles.Change;
         radius?: number | Space;
         shadow?: boolean | number;

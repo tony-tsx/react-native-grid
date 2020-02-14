@@ -14,5 +14,5 @@
     "forceConsistentCasingInFileNames": true,
     "reactNamespace": "React",
   },
-  "exclude": [ "**/__TESTS__/**", "dist" ]
+  "exclude": [ "**/__TESTS__/**", "dist", "Form" ]
 }
