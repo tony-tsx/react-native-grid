@@ -1,6 +1,6 @@
 {
   "name": "react-native-grid",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "React Native Grid",
   "main": "dist/index.js",
   "type": "dist/index.d.ts",
