@@ -8,28 +8,17 @@ export interface Return<P extends Style.Props | Style.Animation.Props> {
 }
 
 const parser = <P extends Style.Props | Style.Animation.Props>( {
-  // Centralização
   align, justify, center,
-  // Posicionamento
   absolute, relative,
-  // Borda
   radius,
-  // Backgorund
   bg,
-  // Sombra
   shadow,
-  // Direção e flex
   flex, col, row, reverse,
-  // Altura e largura
   h, w,
-  // espaçamento interno e externo
   m, p,
-
-  // Opcionais
   percent, overflow, index, full,
-
-  // Circulo
   circle, size,
+  border,
   style: propStyle,
   ...props
 }: P ): Return<P> => {
@@ -90,7 +79,7 @@ const parser = <P extends Style.Props | Style.Animation.Props>( {
 
     } else if ( Array.isArray( positions ) )
 
-      if ( positions.length === 2 ) {
+      if ( positions.length <= 2 ) {
 
         style.top = positions[0]
         style.left = positions[1]
@@ -160,11 +149,13 @@ const parser = <P extends Style.Props | Style.Animation.Props>( {
   if ( row || row === 0 ) {
     style.flexDirection = 'row'
     if ( typeof row === 'number' ) style.flex = row
+    else if ( !style.flex ) style.flex = 1
   }
 
   if ( col || col === 0 ) {
     style.flexDirection = 'column'
     if ( typeof col === 'number' ) style.flex = col
+    else if ( !style.flex ) style.flex = 1
   }
 
   if ( h )
@@ -315,6 +306,113 @@ const parser = <P extends Style.Props | Style.Animation.Props>( {
 
     else style.borderRadius = width
   }
+
+  if ( border )
+    if ( Array.isArray( border ) )
+
+      if ( border.length <= 2 ) {
+
+        if ( Array.isArray( border[0] ) ) {
+
+          if ( border[0][0] ) style.borderTopWidth = style.borderBottomWidth = border[0][0]
+          if ( border[0][1] )
+            style.borderTopStartRadius =
+            style.borderTopEndRadius =
+            style.borderBottomStartRadius =
+            style.borderBottomEndRadius = border[0][1]
+          if ( border[0][2] ) style.borderTopColor = style.borderBottomColor = border[0][2]
+
+        } else style.borderTopWidth = style.borderBottomWidth = border[0]
+
+        if ( Array.isArray( border[1] ) ) {
+
+          if ( border[1][0] ) style.borderLeftWidth = style.borderRightWidth = border[1][0]
+          if ( border[1][1] )
+            style.borderTopLeftRadius =
+            style.borderTopRightRadius =
+            style.borderBottomLeftRadius =
+            style.borderBottomRightRadius = border[1][1]
+          if ( border[1][2] ) style.borderLeftColor = style.borderRightColor = border[1][2]
+
+        } else style.borderLeftWidth = style.borderRightWidth = border[1]
+
+      } else if ( border.length === 3 ) {
+
+        if ( Array.isArray( border[0] ) ) {
+
+          if ( border[0][0] ) style.borderTopWidth = border[0][0]
+          if ( border[0][1] )
+            style.borderTopStartRadius =
+            style.borderTopEndRadius = border[0][1]
+          if ( border[0][2] ) style.borderTopColor = border[0][2]
+
+        } else style.borderTopWidth = style.borderBottomWidth = border[0]
+
+        if ( Array.isArray( border[1] ) ) {
+
+          if ( border[1][0] ) style.borderLeftWidth = style.borderRightWidth = border[1][0]
+          if ( border[1][1] )
+            style.borderTopLeftRadius =
+            style.borderTopRightRadius =
+            style.borderBottomLeftRadius =
+            style.borderBottomRightRadius = border[1][1]
+          if ( border[1][2] ) style.borderLeftColor = style.borderRightColor = border[1][2]
+
+        } else style.borderLeftWidth = style.borderRightWidth = border[1]
+
+        if ( Array.isArray( border[2] ) ) {
+
+          if ( border[2][0] ) style.borderBottomWidth = border[2][0]
+          if ( border[2][1] )
+            style.borderBottomStartRadius =
+            style.borderBottomEndRadius = border[2][1]
+          if ( border[2][2] ) style.borderBottomColor = border[2][2]
+
+        } else style.borderBottomWidth = border[2]
+
+      } else {
+
+        if ( Array.isArray( border[0] ) ) {
+
+          if ( border[0][0] ) style.borderTopWidth = border[0][0]
+          if ( border[0][1] )
+            style.borderTopLeftRadius =
+            style.borderTopStartRadius =
+            style.borderTopEndRadius = border[0][1]
+          if ( border[0][2] ) style.borderTopColor = border[0][2]
+
+        } else style.borderTopWidth = style.borderBottomWidth = border[0]
+
+        if ( Array.isArray( border[1] ) ) {
+
+          if ( border[1][0] ) style.borderLeftWidth = border[1][0]
+          if ( border[1][1] ) style.borderTopRightRadius = border[1][1]
+          if ( border[1][2] ) style.borderLeftColor = border[1][2]
+
+        } else style.borderLeftWidth = border[1]
+
+        if ( Array.isArray( border[2] ) ) {
+
+          if ( border[2][0] ) style.borderBottomWidth = border[2][0]
+          if ( border[2][1] )
+            style.borderBottomRightRadius =
+            style.borderBottomStartRadius =
+            style.borderBottomEndRadius = border[2][1]
+          if ( border[2][2] ) style.borderBottomColor = border[2][2]
+
+        } else style.borderBottomWidth = border[2]
+
+        if ( Array.isArray( border[3] ) ) {
+
+          if ( border[3][0] ) style.borderRightWidth = border[3][0]
+          if ( border[3][1] ) style.borderBottomLeftRadius = border[3][1]
+          if ( border[3][2] ) style.borderRightColor = border[3][2]
+
+        } else style.borderRightWidth = border[3]
+
+      }
+
+    else style.borderWidth = border
 
   return { style: StyleSheet.flatten( [ style, propStyle ] ) as any, props }
 }
